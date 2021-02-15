@@ -36,11 +36,15 @@
     "react": "^15.4.2",
     "react-bootstrap": "^1.4.3",
     "react-bootstrap-carousel": "^4.1.1",
+    "react-datepicker": "^3.4.1",
     "react-dom": "^15.4.2",
+    "react-horizontal-datepicker": "^2.0.3",
     "react-multiple-select-dropdown-lite": "^2.0.4",
     "react-multiselect-dropdown-bootstrap": "^1.0.16",
     "react-responsive-carousel": "^3.2.11",
     "react-router-dom": "^5.2.0",
+    "reactstrap": "^8.9.0",
+    "reactstrap-date-picker": "0.0.11",
     "sweetalert": "^2.1.2"
   },
   "devDependencies": {

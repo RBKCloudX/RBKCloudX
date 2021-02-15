@@ -1,0 +1,103 @@
+#logo {
+  max-width: 120px !important;
+  max-height: 60px !important;
+  margin-right: 3%;
+}
+.bg-info {
+  background-color: #3333 !important;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.active {
+  color: black !important;
+  font-size: 1.5em !important;
+  font-family: "PT Sans", sans-serif !important;
+}
+.RBK-Title {
+  color: black !important;
+  font-size: 1.8em !important;
+  margin-right: 2%;
+  font-family: "Benne", serif !important;
+}
+@media screen and (max-width: 300px) {
+  .cancelbtn,
+  .signupbtn {
+    width: 100%;
+  }
+}
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.container {
+  padding: 16px;
+}
+.cancelbtn,
+.signupbtn {
+  float: left;
+  width: 50%;
+}
+.cancelbtn {
+  padding: 14px 20px;
+  background-color: #f44336;
+}
+button:hover {
+  opacity: 1;
+}
+button {
+  background-color: #4caf50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+input[type="text"]:focus,
+input[type="password"]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+.search-bar {
+  margin-top: 1.2%;
+  width: 320px !important;
+  max-height: 40px !important;
+}
+.btn-outline-success {
+  height: 35px !important;
+  max-width: 90px;
+}
+.container {
+  max-width: 500px;
+}
+.sign-up-in {
+  position: relative !important;
+  justify-content: center !important;
+  align-items: center !important;
+  /* display: inline-block !important; */
+}
+/* this class for the lable that contains calendar in the signup component  */
+.bday {
+  display: block !important;
+}
+/* this class for the ancre in the signup component  */
+.loginAncre {
+  font-size: medium !important;
+  max-height: 21px;
+  padding: 0px;
+}

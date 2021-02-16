@@ -2,8 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import SignUp from "./SignUp.jsx";
 import SignIn from "./LogIn.jsx";
-
-const Nav = ({ handleChange }) => (
+import Home from "./Home.jsx";
+const Nav = ({ handleChange, data }) => (
   <Router>
     <div>
       {/* applying the React Route   */}
@@ -83,6 +83,9 @@ const Nav = ({ handleChange }) => (
           </Route>
           <Route path="/signin">
             <SignIn handleChange={handleChange} />
+          </Route>
+          <Route path="/">
+            <Home data={data} />
           </Route>
         </Switch>
       </div>

@@ -6,6 +6,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import data from "../../Dummy_data.js";
 // import the Blog component
 import Nav from "./Nav.jsx";
+import Footer from "./Footer.jsx";
 class App extends React.Component {
   constructor() {
     super();
@@ -29,7 +30,13 @@ class App extends React.Component {
     return (
       <div>
         {/* Nav-bar must be implemented always but it can be manipulated*/}
-        <Nav handleChange={this.handleChange.bind(this)} />
+        <Nav
+          handleChange={this.handleChange.bind(this)}
+          data={this.state.data}
+        />
+        <div>
+          <Footer />
+        </div>
       </div>
     );
   }

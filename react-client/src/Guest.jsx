@@ -13,6 +13,7 @@ const Guest = ({
   success,
   signUpData,
   detail,
+  submitLogIn,
   renderPost,
   Post
 }) => (
@@ -100,7 +101,7 @@ const Guest = ({
             />
           </Route>
           <Route path="/signin">
-            <SignIn handleChange={handleChange} />
+            <SignIn handleChange={handleChange} submitLogIn={submitLogIn} />
           </Route>
           <Route path="/">
             {!detail ? <Home renderPost={renderPost} data={data} detail={detail} /> : <BlogPost Post={Post}  detail={detail}/>}

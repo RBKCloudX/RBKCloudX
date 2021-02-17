@@ -7,7 +7,7 @@ import data from "../../Dummy_data.js";
 // import the Blog component
 import Guest from "./Guest.jsx";
 import Footer from "./Footer.jsx";
-
+import axios from "axios"
 import BlogPost from "./BlogPost.jsx"
 class App extends React.Component {
   constructor() {
@@ -80,17 +80,19 @@ this.setState({
       }, 500);
     }
   }
-  
+  submitLogIn(e) {
+    e.preventDefault();
+    axios
+      .post("api/users/signin", {
+        email: this.state.email,
+        password: this.state.password,
+      })
+      .then(({ data }) => console.log(data));
+  }
   render() {
     return (
       <div>
-        {/* Nav-bar must be implemented always but it can be manipulated*/}
-         <Guest renderPost={this.renderPost.bind(this)}
-          handleChange={this.handleChange.bind(this)}
-          data={this.state.data}
-          detail={this.state.detail} Post={this.state.Post}
-        /> 
-       
+        {/* Nav-bar must be implemented always but it can be manipulated*/}   
         <Guest
           handleChange={this.handleChange.bind(this)}
           data={this.state.data}
@@ -106,6 +108,9 @@ this.setState({
           handleSubmit={this.handleSubmit.bind(this)}
           failed={this.state.failed}
           success={this.state.success}
+          submitLogIn={this.submitLogIn.bind(this)}
+          detail={this.state.detail} Post={this.state.Post}
+          renderPost={this.renderPost.bind(this)}
         />
         <div>
           <Footer />

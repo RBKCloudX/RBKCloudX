@@ -82,12 +82,12 @@ this.setState({
   }
   submitLogIn(e) {
     e.preventDefault();
-    axios
-      .post("api/users/signin", {
-        email: this.state.email,
-        password: this.state.password,
-      })
-      .then(({ data }) => console.log(data));
+    axios.post("/api/users/signin", {
+      email: this.state.email,
+      password: this.state.password,
+    })
+    .then(({ data }) => console.log(data));
+    console.log("clicked");
   }
   render() {
     return (

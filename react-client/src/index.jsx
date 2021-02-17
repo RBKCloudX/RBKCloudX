@@ -69,7 +69,15 @@ class App extends React.Component {
       }, 500);
     }
   }
-  
+  submitLogIn(e) {
+    e.preventDefault();
+    axios
+      .post("api/users/signin", {
+        email: this.state.email,
+        password: this.state.password,
+      })
+      .then(({ data }) => console.log(data));
+  }
   render() {
     return (
       <div>
@@ -89,6 +97,7 @@ class App extends React.Component {
           handleSubmit={this.handleSubmit.bind(this)}
           failed={this.state.failed}
           success={this.state.success}
+          submitLogIn={this.submitLogIn.bind(this)}
         />
         <div>
           <Footer />

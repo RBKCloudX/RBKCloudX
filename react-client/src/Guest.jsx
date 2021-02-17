@@ -11,6 +11,7 @@ const Guest = ({
   failed,
   success,
   signUpData,
+  submitLogIn,
 }) => (
   <Router>
     <div>
@@ -96,7 +97,7 @@ const Guest = ({
             />
           </Route>
           <Route path="/signin">
-            <SignIn handleChange={handleChange} />
+            <SignIn handleChange={handleChange} submitLogIn={submitLogIn} />
           </Route>
           <Route path="/">
             <Home data={data} />

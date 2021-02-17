@@ -1,5 +1,5 @@
 import React from "react";
-const SignIn = ({ handleChange }) => (
+const SignIn = ({ handleChange, submitLogIn }) => (
   <div>
     <form>
       <div className="container">
@@ -34,7 +34,7 @@ const SignIn = ({ handleChange }) => (
                 Create un account
               </a>
             </button>
-            <button type="submit" className="signupbtn">
+            <button type="submit" className="signupbtn" onClick={submitLogIn}>
               Login Now
             </button>
           </div>

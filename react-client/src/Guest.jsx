@@ -4,7 +4,14 @@ import SignUp from "./SignUp.jsx";
 import SignIn from "./LogIn.jsx";
 import Home from "./Home.jsx";
 import AboutUs from "./AboutUs.jsx";
-const Guest = ({ handleChange, data }) => (
+const Guest = ({
+  handleChange,
+  data,
+  handleSubmit,
+  failed,
+  success,
+  signUpData,
+}) => (
   <Router>
     <div>
       {/* applying the React Route   */}
@@ -80,7 +87,13 @@ const Guest = ({ handleChange, data }) => (
           renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/signup">
-            <SignUp handleChange={handleChange} />
+            <SignUp
+              handleChange={handleChange}
+              handleSubmit={handleSubmit}
+              failed={failed}
+              success={success}
+              signUpData={signUpData}
+            />
           </Route>
           <Route path="/signin">
             <SignIn handleChange={handleChange} />

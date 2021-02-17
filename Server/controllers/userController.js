@@ -6,6 +6,7 @@ const saltRounds = 10;
 module.exports = {
   signUp: async (req, res) => {
     try {
+      console.log(req.body);
       bcrypt.genSalt(saltRounds, function (err, salt) {
         if (err) {
           throw err;

@@ -1,4 +1,6 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import AboutUs from "./AboutUs.jsx";
 const Footer = () => (
   <footer className="site-footer">
     <div className="container">
@@ -13,7 +15,9 @@ const Footer = () => (
         <div className="col-xs-6 col-md-3">
           <ul className="footer-links">
             <li>
-              <a href="http://scanfcode.com/about/">About Us</a>
+              <Router>
+                <Link to="/about">About Us</Link>
+              </Router>
             </li>
             <li>
               <a href="https://www.rebootkamp.net/">Contact Us</a>

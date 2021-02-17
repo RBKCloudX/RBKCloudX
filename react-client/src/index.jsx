@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 // import Dummy_data
 import data from "../../Dummy_data.js";
 // import the Blog component
-import Nav from "./Nav.jsx";
+import Guest from "./Guest.jsx";
 import Footer from "./Footer.jsx";
 class App extends React.Component {
   constructor() {
@@ -19,9 +19,11 @@ class App extends React.Component {
       username: "",
       password: "",
       passwordRepeat: "",
+      post: {},
     };
   }
   // handleChange is for collecting data from signup & singin
+
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
     console.log({ [e.target.name]: e.target.value });
@@ -30,7 +32,7 @@ class App extends React.Component {
     return (
       <div>
         {/* Nav-bar must be implemented always but it can be manipulated*/}
-        <Nav
+        <Guest
           handleChange={this.handleChange.bind(this)}
           data={this.state.data}
         />

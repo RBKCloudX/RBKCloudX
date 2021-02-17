@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import SignUp from "./SignUp.jsx";
 import SignIn from "./LogIn.jsx";
 import Home from "./Home.jsx";
-const Nav = ({ handleChange, data }) => (
+import AboutUs from "./AboutUs.jsx";
+const Guest = ({ handleChange, data }) => (
   <Router>
     <div>
       {/* applying the React Route   */}
@@ -87,9 +88,12 @@ const Nav = ({ handleChange, data }) => (
           <Route path="/">
             <Home data={data} />
           </Route>
+          <Route path="/about">
+            <AboutUs />
+          </Route>
         </Switch>
       </div>
     </div>
   </Router>
 );
-export default Nav;
+export default Guest;

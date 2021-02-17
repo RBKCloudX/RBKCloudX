@@ -13,7 +13,7 @@ app.use(cookieParser());
 app.use("/api/blogs", router);
 
 
-app.use("/api/blogs", router);
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, function () {

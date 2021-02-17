@@ -1,24 +1,30 @@
 import React from "react";
-import Swal from "sweetalert2"
-const SignUp = ({ handleChange , handleSubmit, failed, success, signUpData}) => {
-  console.log('ali', signUpData)
-  if(failed){
+import Swal from "sweetalert2";
+const SignUp = ({
+  handleChange,
+  handleSubmit,
+  failed,
+  success,
+  signUpData,
+}) => {
+  console.log("ali", signUpData);
+  if (failed) {
     Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
+      icon: "error",
+      title: "Oops...",
       text: failed,
-      footer: '<a href>Why do I have this issue?</a>'
-    })
+      footer: "<a href>Why do I have this issue?</a>",
+    });
   }
-  if(success){
+  if (success) {
     Swal.fire({
-      icon: 'success',
-      title: success
-    })
+      icon: "success",
+      title: success,
+    });
   }
   return (
     <div>
-      <form onSubmit={(e)=> handleSubmit(e)}>
+      <form onSubmit={(e) => handleSubmit(e)}>
         <div className="container">
           <h1 id="sign-up-in">Sign Up</h1>
           <p>Please fill in this form to create an account.</p>
@@ -113,7 +119,7 @@ const SignUp = ({ handleChange , handleSubmit, failed, success, signUpData}) => 
                   Login
                 </a>
               </button>
-              <button type="submit" className="signupbtn" >
+              <button type="submit" className="signupbtn">
                 Sign Up
               </button>
             </div>

@@ -1,8 +1,24 @@
 import React from "react";
-const SignUp = ({ handleChange }) => {
+import Swal from "sweetalert2"
+const SignUp = ({ handleChange , handleSubmit, failed, success, signUpData}) => {
+  console.log('ali', signUpData)
+  if(failed){
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: failed,
+      footer: '<a href>Why do I have this issue?</a>'
+    })
+  }
+  if(success){
+    Swal.fire({
+      icon: 'success',
+      title: success
+    })
+  }
   return (
     <div>
-      <form>
+      <form onSubmit={(e)=> handleSubmit(e)}>
         <div className="container">
           <h1 id="sign-up-in">Sign Up</h1>
           <p>Please fill in this form to create an account.</p>
@@ -15,6 +31,7 @@ const SignUp = ({ handleChange }) => {
               placeholder="Enter your first name"
               name="first_name"
               required
+              value={signUpData.first_name}
               onChange={(e) => handleChange(e)}
             />
             <label htmlFor="last_name">
@@ -25,6 +42,7 @@ const SignUp = ({ handleChange }) => {
               placeholder="Enter your last name"
               name="last_name"
               required
+              value={signUpData.last_name}
               onChange={(e) => handleChange(e)}
             />
             <label htmlFor="username">
@@ -35,6 +53,7 @@ const SignUp = ({ handleChange }) => {
               placeholder="Enter your username"
               name="username"
               required
+              value={signUpData.username}
               onChange={(e) => handleChange(e)}
             />
             <label htmlFor="email">
@@ -45,6 +64,7 @@ const SignUp = ({ handleChange }) => {
               placeholder="Enter Email"
               name="email"
               required
+              value={signUpData.email}
               onChange={(e) => handleChange(e)}
             />
             <div className="ui input bday focus container ">
@@ -58,6 +78,7 @@ const SignUp = ({ handleChange }) => {
                 name="bday"
                 min="1980-01-01"
                 max="2050-01-01"
+                value={signUpData.bday}
                 onChange={(e) => handleChange(e)}
               />
             </div>
@@ -70,6 +91,7 @@ const SignUp = ({ handleChange }) => {
               placeholder="Enter Password"
               name="password"
               required
+              value={signUpData.password}
               onChange={(e) => handleChange(e)}
             />
             <label htmlFor="psw-repeat">
@@ -80,6 +102,7 @@ const SignUp = ({ handleChange }) => {
               placeholder="Repeat Password"
               name="passwordRepeat"
               required
+              value={signUpData.passwordRepeat}
               onChange={(e) => handleChange(e)}
             />
             <p>By creating an account you become a member</p>
@@ -90,7 +113,7 @@ const SignUp = ({ handleChange }) => {
                   Login
                 </a>
               </button>
-              <button type="submit" className="signupbtn">
+              <button type="submit" className="signupbtn" >
                 Sign Up
               </button>
             </div>

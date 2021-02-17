@@ -39,7 +39,30 @@ this.setState({
     console.log({ [e.target.name]: e.target.value });
   }
 
+  // handleSubmit is for submitting data
+  handleSubmit(e){
+    e.preventDefault();
+    if(this.state.password!==this.state.passwordRepeat){
+      this.setState({failed: "confirmation password failed"})
+      setTimeout(() => {
+        this.setState({failed: ""}) 
+      }, 500);
+      
+      console.log(this.state)
+    
+    }else{
+      //  axios.post('api/user/signup', {first_name:this.state.first_name, last_name: this.state.last_name, bday: this.state.bday,email: this.state.email,username:this.state.username, password: this.state.password}).then(res=>{console.log(res.data)}  ).catch(err=> console.log(err)) 
+       this.setState({success: "your account has been created successfully"})
+       setTimeout(() => {
+        this.setState({first_name:"", last_name:"", bday: "",email:"",username:"", password:"", passwordRepeat:"", success:""})
+       }, 500);
+      
+      
+    }
+    
+    
 
+  }
   render() {
     return (
       <div>

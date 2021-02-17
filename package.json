@@ -47,7 +47,7 @@
     "reactstrap": "^8.9.0",
     "reactstrap-date-picker": "0.0.11",
     "sweetalert": "^2.1.2",
-    "sweetalert2": "^10.15.1"
+    "sweetalert2": "^10.15.2"
   },
   "devDependencies": {
     "babel-core": "^6.23.1",

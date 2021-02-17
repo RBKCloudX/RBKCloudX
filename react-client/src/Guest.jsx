@@ -4,7 +4,18 @@ import SignUp from "./SignUp.jsx";
 import SignIn from "./LogIn.jsx";
 import Home from "./Home.jsx";
 import BlogPost from "./BlogPost.jsx";
-const Nav = ({ handleChange, data, renderPost, detail, Post, handleSubmit, failed, success, signUpData }) => (
+import AboutUs from "./AboutUs.jsx";
+const Guest = ({
+  handleChange,
+  data,
+  handleSubmit,
+  failed,
+  success,
+  signUpData,
+  detail,
+  renderPost,
+  Post
+}) => (
   <Router>
     <div>
       {/* applying the React Route   */}
@@ -80,7 +91,13 @@ const Nav = ({ handleChange, data, renderPost, detail, Post, handleSubmit, faile
           renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/signup">
-            <SignUp handleChange={handleChange}  handleSubmit={handleSubmit} failed={failed} success={success} signUpData={signUpData}/>
+            <SignUp
+              handleChange={handleChange}
+              handleSubmit={handleSubmit}
+              failed={failed}
+              success={success}
+              signUpData={signUpData}
+            />
           </Route>
           <Route path="/signin">
             <SignIn handleChange={handleChange} />
@@ -88,9 +105,12 @@ const Nav = ({ handleChange, data, renderPost, detail, Post, handleSubmit, faile
           <Route path="/">
             {!detail ? <Home renderPost={renderPost} data={data} detail={detail} /> : <BlogPost Post={Post}  detail={detail}/>}
           </Route>
+          <Route path="/about">
+            <AboutUs />
+          </Route>
         </Switch>
       </div>
     </div>
   </Router>
 );
-export default Nav;
+export default Guest;

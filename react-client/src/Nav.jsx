@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import SignUp from "./SignUp.jsx";
 import SignIn from "./LogIn.jsx";
 import Home from "./Home.jsx";
-const Nav = ({ handleChange, data }) => (
+const Nav = ({ handleChange, data, handleSubmit , failed, success, signUpData}) => (
   <Router>
     <div>
       {/* applying the React Route   */}
@@ -79,7 +79,7 @@ const Nav = ({ handleChange, data }) => (
           renders the first one that matches the current URL. */}
         <Switch>
           <Route path="/signup">
-            <SignUp handleChange={handleChange} />
+            <SignUp handleChange={handleChange}  handleSubmit={handleSubmit} failed={failed} success={success} signUpData={signUpData}/>
           </Route>
           <Route path="/signin">
             <SignIn handleChange={handleChange} />

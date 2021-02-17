@@ -7,7 +7,8 @@ import data from "../../Dummy_data.js";
 // import the Blog component
 import Guest from "./Guest.jsx";
 import Footer from "./Footer.jsx";
-import axios from "axios";
+import axios from "axios"
+import BlogPost from "./BlogPost.jsx"
 class App extends React.Component {
   constructor() {
     super();
@@ -20,9 +21,19 @@ class App extends React.Component {
       username: "",
       password: "",
       passwordRepeat: "",
+      Post: {},
+      detail: false,
       failed: "",
       success: "",
     };
+  }
+
+  renderPost(blog, detail) {
+console.log("clicked",blog);
+this.setState({
+  Post: blog,
+  detail: detail
+})
   }
   // handleChange is for collecting data from signup & singin
 
@@ -71,17 +82,17 @@ class App extends React.Component {
   }
   submitLogIn(e) {
     e.preventDefault();
-    axios
-      .post("api/users/signin", {
-        email: this.state.email,
-        password: this.state.password,
-      })
-      .then(({ data }) => console.log(data));
+    axios.post("/api/users/signin", {
+      email: this.state.email,
+      password: this.state.password,
+    })
+    .then(({ data }) => console.log(data));
+    console.log("clicked");
   }
   render() {
     return (
       <div>
-        {/* Nav-bar must be implemented always but it can be manipulated*/}
+        {/* Nav-bar must be implemented always but it can be manipulated*/}   
         <Guest
           handleChange={this.handleChange.bind(this)}
           data={this.state.data}
@@ -98,6 +109,8 @@ class App extends React.Component {
           failed={this.state.failed}
           success={this.state.success}
           submitLogIn={this.submitLogIn.bind(this)}
+          detail={this.state.detail} Post={this.state.Post}
+          renderPost={this.renderPost.bind(this)}
         />
         <div>
           <Footer />

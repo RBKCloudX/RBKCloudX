@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import SignUp from "./SignUp.jsx";
 import SignIn from "./LogIn.jsx";
 import Home from "./Home.jsx";
+import BlogPost from "./BlogPost.jsx";
 import AboutUs from "./AboutUs.jsx";
 const Guest = ({
   handleChange,
@@ -11,7 +12,10 @@ const Guest = ({
   failed,
   success,
   signUpData,
+  detail,
   submitLogIn,
+  renderPost,
+  Post
 }) => (
   <Router>
     <div>
@@ -37,7 +41,7 @@ const Guest = ({
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link to="/" className="nav-link active" aria-current="page">
+                <Link to="/" className="nav-link active" aria-current="page" onClick={()=> {renderPost(!detail )}}>
                   Home
                 </Link>
               </li>
@@ -100,7 +104,7 @@ const Guest = ({
             <SignIn handleChange={handleChange} submitLogIn={submitLogIn} />
           </Route>
           <Route path="/">
-            <Home data={data} />
+            {!detail ? <Home renderPost={renderPost} data={data} detail={detail} /> : <BlogPost Post={Post}  detail={detail}/>}
           </Route>
           <Route path="/about">
             <AboutUs />

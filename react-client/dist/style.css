@@ -259,3 +259,14 @@ input[type="password"] {
   padding: 1%;
   font-weight: Bold;
 }
+
+.blog {
+  width: 80%;
+  margin: 5px;
+  max-width: 800px;
+  font-size: 1.3em;
+  line-height: 1.5em;
+  background-color: white;
+  border: 1px #713e5a;
+  padding: 5px 20px 5px 20px;
+}

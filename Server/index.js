@@ -10,8 +10,6 @@ app.use(express.static(__dirname + "/../react-client/dist"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use("/api/blogs", router);
-
 
 app.use("/api/blogs", router);
 

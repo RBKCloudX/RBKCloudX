@@ -107,6 +107,7 @@ input[type="password"] {
   padding: 2em;
   margin: auto;
   display: block;
+  min-width: 610px;
 }
 .column {
   margin-top: 2% !important;

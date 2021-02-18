@@ -77,7 +77,7 @@ const Guest = ({
                 </a>
                 <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li>
-                    <Link className="dropdown-item" to={Redirect}>
+                    <Link className="dropdown-item" to="signin">
                       Sign in
                     </Link>
                   </li>
@@ -141,7 +141,7 @@ const Guest = ({
               signUpData={signUpData}
             />
           </Route>
-          <Route from="/signin" to={Redirect}>
+          <Route path="/signin">
             <SignIn handleChange={handleChange} submitLogIn={submitLogIn} />
           </Route>
           <Route path="/">

@@ -98,12 +98,10 @@ class App extends React.Component {
       })
       .then(({ data }) => {
         if (data == true) {
-          this.setState({ isLoggedIn: data, Redirect: "/" });
+          this.setState({ isLoggedIn: data });
         }
-        console.log("clicked", this.state.Redirect);
       });
   }
-
   render() {
     return (
       <div>

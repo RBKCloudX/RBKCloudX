@@ -7,7 +7,6 @@ const SignUp = ({
   success,
   signUpData,
 }) => {
-  console.log("ali", signUpData);
   if (failed) {
     Swal.fire({
       icon: "error",

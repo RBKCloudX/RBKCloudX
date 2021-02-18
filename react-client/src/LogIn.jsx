@@ -1,46 +1,59 @@
 import React from "react";
 const SignIn = ({ handleChange, submitLogIn }) => (
-  <div>
-    <form>
-      <div className="container">
-        <h1 id="sign-up-in">Sign In</h1>
-        <p>Please fill in this form to log in.</p>
-        <div>
-          <label htmlFor="email">
-            <b>Email</b>
-          </label>
-          <input
-            type="text"
-            placeholder="Enter Email"
-            name="email"
-            required
-            onChange={(e) => handleChange(e)}
-          />
-          <label htmlFor="psw">
-            <b>Password</b>
-          </label>
-          <input
-            type="password"
-            placeholder="Enter Password"
-            name="password"
-            required
-            onChange={(e) => handleChange(e)}
-          />
-          <p>By creating an account you become a member</p>
-
-          <div className="clearfix">
-            <button type="button" className="cancelbtn">
-              <a href="/signup" className="nav-link active loginAncre">
-                Create un account
-              </a>
-            </button>
-            <button type="submit" className="signupbtn" onClick={submitLogIn}>
-              Login Now
-            </button>
+  <div id="myId">
+    <section className="register-account">
+      <div className="signform">
+        <div className="left">
+          <a href="#" className="bts-a">
+            Don't have an account? Sign up!
+          </a>
+          <div className="bts">
+            <a href="#" className="fblogin social">
+              <i className="facebook icon icons"></i>
+              <span>Sign in with Facebook</span>
+            </a>
+            <a href="#" className="twlogin social">
+              <i className="twitter icon icons"></i>
+              <span>Sign in with Twitter</span>
+            </a>
+            <a href="#" className="gplogin social">
+              <i className="google icon icons"></i>
+              <span>Sign in with Google</span>
+            </a>
+          </div>
+        </div>
+        <div className="right">
+          <div className="headit">
+            <h4>Login To Your Account</h4>
+          </div>
+          <div className="form">
+            <form className="login-form" id="login-form">
+              <input
+                type="text"
+                placeholder="User Name"
+                name="email"
+                onChange={(e) => handleChange(e)}
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                name="password"
+                onChange={(e) => handleChange(e)}
+              />
+              <input
+                className="subbt"
+                type="submit"
+                value="Sign In"
+                onClick={submitLogIn}
+              />
+            </form>
+            <input type="checkbox" id="remember" name="remember" />
+            <span> Remember Me</span>
+            {/*<a href="#">Forgot your password?</a>*/}
           </div>
         </div>
       </div>
-    </form>
+    </section>
   </div>
 );
 

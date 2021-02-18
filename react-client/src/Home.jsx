@@ -1,5 +1,5 @@
 import React from "react";
-const Home = ({ data }) => (
+const Home = ({ data, renderPost, detail }) => (
   <div>
     {data.map((blog, index) => (
       <div className="feed" key={index}>
@@ -12,7 +12,14 @@ const Home = ({ data }) => (
           <div className="ui two column grid">
             <div className="ui raised segment">
               <a className="ui whitesmoke ribbon label">{blog.tags}</a>
-              <h1 className="title">{blog.title}</h1>
+              <h1
+                onClick={() => {
+                  renderPost(blog, !detail);
+                }}
+                className="title"
+              >
+                {blog.title}
+              </h1>
               <div>
                 {blog.body.split(".").map((paragraph, index) => (
                   <p className="body" key={index}>

@@ -42,7 +42,7 @@ const Footer = () => (
                   className="facebook ui circular facebook icon button"
                   href="https://www.facebook.com/RBKTunisia"
                 >
-                  <i className="facebook icon"></i>
+                  <i className="facebook icon icons"></i>
                 </a>
               </li>
               <li>
@@ -50,15 +50,15 @@ const Footer = () => (
                   className="twitter ui circular facebook icon button"
                   href="https://twitter.com/rebootkamp?lang=en"
                 >
-                  <i className="twitter icon"></i>
+                  <i className="twitter icon icons"></i>
                 </a>
               </li>
               <li>
                 <a
-                  className="linkedin ui circular facebook icon button"
+                  className="linkedin ui circular facebook icon button middleIcon"
                   href="https://www.linkedin.com/company/rebootkamp-tunisie/"
                 >
-                  <i className="linkedin icon"></i>
+                  <i className="linkedin icon icons"></i>
                 </a>
               </li>
             </ul>

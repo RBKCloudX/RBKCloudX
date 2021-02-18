@@ -1,13 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
 //  import react router
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  Redirect,
+} from "react-router-dom";
 // import Dummy_data
 import data from "../../Dummy_data.js";
 // import the Blog component
 import Guest from "./Guest.jsx";
 import Footer from "./Footer.jsx";
 import axios from "axios";
+import BlogPost from "./BlogPost.jsx";
 class App extends React.Component {
   constructor() {
     super();
@@ -20,9 +27,22 @@ class App extends React.Component {
       username: "",
       password: "",
       passwordRepeat: "",
+      Post: {},
+      detail: false,
       failed: "",
       success: "",
+      isLoggedIn: false,
+      user_post: "",
+      Redirect: "/signin",
     };
+  }
+
+  renderPost(blog, detail) {
+    console.log("clicked", blog);
+    this.setState({
+      Post: blog,
+      detail: detail,
+    });
   }
   // handleChange is for collecting data from signup & singin
 
@@ -72,12 +92,18 @@ class App extends React.Component {
   submitLogIn(e) {
     e.preventDefault();
     axios
-      .post("api/users/signin", {
+      .post("/api/users/signin", {
         email: this.state.email,
         password: this.state.password,
       })
-      .then(({ data }) => console.log(data));
+      .then(({ data }) => {
+        if (data == true) {
+          this.setState({ isLoggedIn: data, Redirect: "/" });
+        }
+        console.log("clicked", this.state.Redirect);
+      });
   }
+
   render() {
     return (
       <div>
@@ -98,7 +124,13 @@ class App extends React.Component {
           failed={this.state.failed}
           success={this.state.success}
           submitLogIn={this.submitLogIn.bind(this)}
+          detail={this.state.detail}
+          Post={this.state.Post}
+          renderPost={this.renderPost.bind(this)}
+          isLoggedIn={this.state.isLoggedIn}
+          Redirect={this.state.Redirect}
         />
+
         <div>
           <Footer />
         </div>

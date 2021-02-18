@@ -1,4 +1,5 @@
 const express = require("express");
+const path = require("path");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
@@ -15,6 +16,11 @@ app.use(cookieParser());
 
 app.use("/api/blogs", router);
 app.use("/api/users", userRouters);
+
+app.get('*', (req,res) =>{
+  res.sendFile(path.join(__dirname+'/../react-client/dist/index.html'));
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, function () {
   console.log("listening on port 3000!");

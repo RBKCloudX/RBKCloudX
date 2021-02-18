@@ -2,6 +2,7 @@ const db = require("../../DB/index");
 // we need to import bicrypt
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
+const path = require("path")
 //
 module.exports = {
   signUp: async (req, res) => {
@@ -41,7 +42,7 @@ module.exports = {
               if (err) {
                 res.send(err);
               } else {
-                res.send(result);
+                res.send(result)
               }
             }
           );

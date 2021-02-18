@@ -36,7 +36,6 @@ const SignUp = ({
               placeholder="Enter your first name"
               name="first_name"
               required
-              value={signUpData.first_name}
               onChange={(e) => handleChange(e)}
             />
             <label htmlFor="last_name">
@@ -47,7 +46,6 @@ const SignUp = ({
               placeholder="Enter your last name"
               name="last_name"
               required
-              value={signUpData.last_name}
               onChange={(e) => handleChange(e)}
             />
             <label htmlFor="username">
@@ -58,7 +56,6 @@ const SignUp = ({
               placeholder="Enter your username"
               name="username"
               required
-              value={signUpData.username}
               onChange={(e) => handleChange(e)}
             />
             <label htmlFor="email">
@@ -69,7 +66,6 @@ const SignUp = ({
               placeholder="Enter Email"
               name="email"
               required
-              value={signUpData.email}
               onChange={(e) => handleChange(e)}
             />
             <div className="ui input bday focus container ">
@@ -83,7 +79,6 @@ const SignUp = ({
                 name="bday"
                 min="1980-01-01"
                 max="2050-01-01"
-                value={signUpData.bday}
                 onChange={(e) => handleChange(e)}
               />
             </div>
@@ -96,7 +91,6 @@ const SignUp = ({
               placeholder="Enter Password"
               name="password"
               required
-              value={signUpData.password}
               onChange={(e) => handleChange(e)}
             />
             <label htmlFor="psw-repeat">
@@ -107,7 +101,6 @@ const SignUp = ({
               placeholder="Repeat Password"
               name="passwordRepeat"
               required
-              value={signUpData.passwordRepeat}
               onChange={(e) => handleChange(e)}
             />
             <p>By creating an account you become a member</p>

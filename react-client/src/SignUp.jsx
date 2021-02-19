@@ -1,26 +1,6 @@
 import React from "react";
 import Swal from "sweetalert2";
-const SignUp = ({
-  handleChange,
-  handleSubmit,
-  failed,
-  success,
-  signUpData,
-}) => {
-  if (failed) {
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: failed,
-      footer: "<a href>Why do I have this issue?</a>",
-    });
-  }
-  if (success) {
-    Swal.fire({
-      icon: "success",
-      title: success,
-    });
-  }
+const SignUp = ({ handleChange, handleSubmit, signUpData }) => {
   return (
     <div>
       <form onSubmit={(e) => handleSubmit(e)}>
@@ -55,6 +35,16 @@ const SignUp = ({
               type="text"
               placeholder="Enter your username"
               name="username"
+              required
+              onChange={(e) => handleChange(e)}
+            />
+            <label htmlFor="username">
+              <b>Your image link</b>
+            </label>
+            <input
+              type="text"
+              placeholder="Enter your Your image link"
+              name="imageUrl"
               required
               onChange={(e) => handleChange(e)}
             />

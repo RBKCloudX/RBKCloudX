@@ -46,18 +46,19 @@ class App extends React.Component {
     this.isAuthenticated = this.isAuthenticated.bind(this);
     this.onLogOut = this.onLogOut.bind(this);
   }
-  // setUsername function that will check using the token if the token valid for a specific user then he will stay logged in
-  setCurrentState() {
-    localStorage.setItem("isLoggedIn", false);
-    const token = localStorage.getItem("token");
-    axios.get("/api/verify/" + token).then(({ data }) => {
-      this.setState({ currentUser: data, isLoggedIn: true });
-      console.log(this.state.currentUser);
-    });
-  }
   componentDidMount() {
     this.setCurrentState();
   }
+  // setUsername function that will check using the token if the token valid for a specific user then he will stay logged in
+  setCurrentState() {
+    const token = localStorage.getItem("token");
+    axios.get("/api/verify/" + token).then(({ data }) => {
+      this.setState({ currentUser: data, isLoggedIn: true });
+      localStorage.setItem("isLoggedIn", true);
+      console.log("=>>>", data);
+    });
+  }
+
   isAuthenticated() {
     return localStorage.getItem("isLoggedIn");
   }
@@ -105,6 +106,7 @@ class App extends React.Component {
               icon: "success",
               title: this.state.success,
             });
+            this.props.history.push("/signin");
             console.log(this.state.user);
           } else {
             this.setState({ failed: "email or username already exists" });
@@ -124,7 +126,6 @@ class App extends React.Component {
           });
         });
     }
-  
   }
   submitLogIn(e) {
     e.preventDefault();
@@ -135,8 +136,7 @@ class App extends React.Component {
       })
       .then((result) => {
         if (result.data.logged == true) {
-          this.setState({ isLoggedIn: result.data.logged 
-          });
+          this.setState({ isLoggedIn: result.data.logged });
           localStorage.setItem("token", result.data.data.token);
           localStorage.setItem("isLoggedIn", true);
           this.props.history.push("/");

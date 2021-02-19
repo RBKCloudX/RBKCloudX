@@ -723,13 +723,7 @@ form#login-form:after {
 #post-btn-tag {
   margin-left: 3%;
 }
-/* textarea {
-  width: 70%;
-  height: 900px;
-  padding: 12px 20px;
-  box-sizing: border-box;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  background-color: #f8f8f8;
-  resize: none;
-} */
+#welcome {
+  margin: auto;
+}
+/* -------------------------UserBlog CSS----------------------- */

@@ -4,7 +4,7 @@ const SignIn = ({ handleChange, submitLogIn }) => (
     <section className="register-account">
       <div className="signform">
         <div className="left">
-          <a href="#" className="bts-a">
+          <a href="/signup" className="bts-a">
             Don't have an account? Sign up!
           </a>
           <div className="bts">
@@ -29,8 +29,8 @@ const SignIn = ({ handleChange, submitLogIn }) => (
           <div className="form">
             <form className="login-form" id="login-form">
               <input
-                type="text"
-                placeholder="User Name"
+                type="email"
+                placeholder="Email"
                 name="email"
                 onChange={(e) => handleChange(e)}
               />

@@ -19,7 +19,9 @@ import SignIn from "./LogIn.jsx";
 import Home from "./Home.jsx";
 import BlogPost from "./BlogPost.jsx";
 import AboutUs from "./AboutUs.jsx";
+import UserBlogs from "./UserBlogs.jsx";
 import User from "./User.jsx";
+import Swal from "sweetalert2";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -30,6 +32,7 @@ class App extends React.Component {
       bday: "",
       email: "",
       username: "",
+      imageUrl: "",
       password: "",
       passwordRepeat: "",
       Post: {},
@@ -38,9 +41,11 @@ class App extends React.Component {
       success: "",
       isLoggedIn: false,
       user_post: "",
-      Redirect: "/signin",
+      user: {},
     };
   }
+  // setUsername function that will check using the token if the token valid for a specific user then he will stay logged in
+  setUsername() {}
 
   renderPost(blog, detail) {
     console.log("clicked", blog);
@@ -69,13 +74,37 @@ class App extends React.Component {
           bday: this.state.bday,
           email: this.state.email,
           username: this.state.username,
+          imageUrl: this.state.imageUrl,
           password: this.state.password,
         })
         .then((res) => {
-          console.log(res.data);
+          if (!res.data.code) {
+            this.setState({ user: res.data });
+            localStorage.setItem("token", res.data.token);
+            Swal.fire({
+              icon: "success",
+              title: this.state.success,
+            });
+            console.log(this.state.user);
+          } else {
+            this.setState({ failed: "email or username already exists" });
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: this.state.failed,
+              footer: "<a href>Why do I have this issue?</a>",
+            });
+          }
         })
-        .catch((err) => console.log(err));
-      this.setState({ success: "your account has been created successfully" });
+        .catch((err) => {
+          this.setState({ failed: "email or username already exists" });
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: this.state.failed,
+            footer: "<a href>Why do I have this issue?</a>",
+          });
+        });
     }
   }
   submitLogIn(e) {
@@ -89,6 +118,12 @@ class App extends React.Component {
         if (data == true) {
           this.setState({ isLoggedIn: data });
           this.props.history.push("/");
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Password or email is incorrect!",
+          });
         }
       });
   }
@@ -98,6 +133,7 @@ class App extends React.Component {
   onLogOut(e) {
     e.preventDefault();
     this.setState({ isLoggedIn: false });
+    this.props.history.push("/");
   }
 
   render() {
@@ -185,17 +221,23 @@ class App extends React.Component {
                   </li>
                   {this.state.isLoggedIn ? (
                     <li className="nav-item">
-                      <Link
-                        to="/story"
-                        className="nav-link active"
-                        // aria-current="page"
-                      >
+                      <Link to="/story" className="nav-link active">
                         Write an article
+                      </Link>
+                    </li>
+                  ) : null}
+                  {this.state.isLoggedIn ? (
+                    <li className="nav-item">
+                      <Link to="/blogs" className="nav-link active">
+                        My Blogs
                       </Link>
                     </li>
                   ) : null}
                 </ul>
                 <form className="d-flex">
+                  {this.state.isLoggedIn ? (
+                    <h4 id="welcome">Welcome, </h4>
+                  ) : null}
                   <input
                     className="form-control me-2 search-bar"
                     type="search"
@@ -214,12 +256,16 @@ class App extends React.Component {
             {/* A <Switch> looks through its children <Route>s and
           renders the first one that matches the current URL. */}
             <Switch>
+              <Route path="/blogs">
+                <UserBlogs />
+              </Route>
               <Route path="/story">
                 <User
                   handleChange={this.handleChange.bind(this)}
                   onSubmitPost={this.onSubmitPost.bind(this)}
                 />
               </Route>
+
               <Route path="/signup">
                 <SignUp
                   handleChange={this.handleChange.bind(this)}

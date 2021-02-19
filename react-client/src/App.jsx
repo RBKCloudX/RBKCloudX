@@ -106,6 +106,7 @@ class App extends React.Component {
           });
         });
     }
+  
   }
   submitLogIn(e) {
     e.preventDefault();

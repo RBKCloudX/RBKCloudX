@@ -52,7 +52,17 @@ module.exports = {
               if (err) {
                 res.send(err);
               } else {
-                res.send(result);
+                const token = jwt.sign(
+                  {
+                    data: req.body.email,
+                  },
+                  "secret",
+                  { expiresIn: "24h" }
+                );
+                res.send({
+                  logged: result,
+                  data: { email: req.body.email, token: token },
+                });
               }
             }
           );

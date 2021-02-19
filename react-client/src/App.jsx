@@ -40,12 +40,27 @@ class App extends React.Component {
       failed: "",
       success: "",
       isLoggedIn: false,
-      user_post: "",
+      currentUser: null,
       user: {},
     };
+    this.isAuthenticated = this.isAuthenticated.bind(this);
+    this.onLogOut = this.onLogOut.bind(this);
   }
   // setUsername function that will check using the token if the token valid for a specific user then he will stay logged in
-  setUsername() {}
+  setCurrentState() {
+    localStorage.setItem("isLoggedIn", false);
+    const token = localStorage.getItem("token");
+    axios.get("/api/verify/" + token).then(({ data }) => {
+      this.setState({ currentUser: data, isLoggedIn: true });
+      console.log(this.state.currentUser);
+    });
+  }
+  componentDidMount() {
+    this.setCurrentState();
+  }
+  isAuthenticated() {
+    return localStorage.getItem("isLoggedIn");
+  }
 
   renderPost(blog, detail) {
     console.log("clicked", blog);
@@ -66,6 +81,11 @@ class App extends React.Component {
     e.preventDefault();
     if (this.state.password !== this.state.passwordRepeat) {
       this.setState({ failed: "confirmation password failed" });
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: this.state.failed,
+      });
     } else {
       axios
         .post("api/users/signup", {
@@ -92,7 +112,6 @@ class App extends React.Component {
               icon: "error",
               title: "Oops...",
               text: this.state.failed,
-              footer: "<a href>Why do I have this issue?</a>",
             });
           }
         })
@@ -102,7 +121,6 @@ class App extends React.Component {
             icon: "error",
             title: "Oops...",
             text: this.state.failed,
-            footer: "<a href>Why do I have this issue?</a>",
           });
         });
     }
@@ -114,9 +132,12 @@ class App extends React.Component {
         email: this.state.email,
         password: this.state.password,
       })
-      .then(({ data }) => {
-        if (data == true) {
-          this.setState({ isLoggedIn: data });
+      .then((result) => {
+        if (result.data.logged == true) {
+          this.setState({ isLoggedIn: result.data.logged 
+          });
+          localStorage.setItem("token", result.data.data.token);
+          localStorage.setItem("isLoggedIn", true);
           this.props.history.push("/");
         } else {
           Swal.fire({
@@ -127,13 +148,16 @@ class App extends React.Component {
         }
       });
   }
+
   onSubmitPost(e) {
     console.log("clicked");
   }
   onLogOut(e) {
     e.preventDefault();
-    this.setState({ isLoggedIn: false });
-    this.props.history.push("/");
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("token");
+    this.setState({ isLoggedIn: false, currentUser: null });
+    this.props.history.push("/signin");
   }
 
   render() {
@@ -180,7 +204,7 @@ class App extends React.Component {
                     <a className="nav-link active" href="#"></a>
                   </li>
                   <li className="nav-item dropdown">
-                    {!this.state.isLoggedIn ? (
+                    {!this.isAuthenticated() ? (
                       <div>
                         {" "}
                         <a
@@ -213,20 +237,20 @@ class App extends React.Component {
                       <button
                         className="btn btn-outline-success LogOut"
                         type="submit"
-                        onClick={this.onLogOut.bind(this)}
+                        onClick={this.onLogOut}
                       >
                         Log out
                       </button>
                     )}
                   </li>
-                  {this.state.isLoggedIn ? (
+                  {this.isAuthenticated() ? (
                     <li className="nav-item">
                       <Link to="/story" className="nav-link active">
                         Write an article
                       </Link>
                     </li>
                   ) : null}
-                  {this.state.isLoggedIn ? (
+                  {this.isAuthenticated() ? (
                     <li className="nav-item">
                       <Link to="/blogs" className="nav-link active">
                         My Blogs
@@ -236,7 +260,7 @@ class App extends React.Component {
                 </ul>
                 <form className="d-flex">
                   {this.state.isLoggedIn ? (
-                    <h4 id="welcome">Welcome, </h4>
+                    <h4 id="welcome">Welcome, {this.state.currentUser}</h4>
                   ) : null}
                   <input
                     className="form-control me-2 search-bar"

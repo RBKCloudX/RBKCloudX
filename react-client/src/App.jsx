@@ -19,7 +19,9 @@ import SignIn from "./LogIn.jsx";
 import Home from "./Home.jsx";
 import BlogPost from "./BlogPost.jsx";
 import AboutUs from "./AboutUs.jsx";
+import UserBlogs from "./UserBlogs.jsx";
 import User from "./User.jsx";
+import Swal from "sweetalert2";
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -30,6 +32,7 @@ class App extends React.Component {
       bday: "",
       email: "",
       username: "",
+      imageUrl: "",
       password: "",
       passwordRepeat: "",
       Post: {},
@@ -37,9 +40,26 @@ class App extends React.Component {
       failed: "",
       success: "",
       isLoggedIn: false,
-      user_post: "",
-      Redirect: "/signin",
+      currentUser: null,
+      user: {},
     };
+    this.isAuthenticated = this.isAuthenticated.bind(this);
+    this.onLogOut = this.onLogOut.bind(this);
+  }
+  // setUsername function that will check using the token if the token valid for a specific user then he will stay logged in
+  setCurrentState() {
+    localStorage.setItem("isLoggedIn", false);
+    const token = localStorage.getItem("token");
+    axios.get("/api/verify/" + token).then(({ data }) => {
+      this.setState({ currentUser: data, isLoggedIn: true });
+      console.log(this.state.currentUser);
+    });
+  }
+  componentDidMount() {
+    this.setCurrentState();
+  }
+  isAuthenticated() {
+    return localStorage.getItem("isLoggedIn");
   }
 
   renderPost(blog, detail) {
@@ -61,6 +81,11 @@ class App extends React.Component {
     e.preventDefault();
     if (this.state.password !== this.state.passwordRepeat) {
       this.setState({ failed: "confirmation password failed" });
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: this.state.failed,
+      });
     } else {
       axios
         .post("api/users/signup", {
@@ -69,13 +94,35 @@ class App extends React.Component {
           bday: this.state.bday,
           email: this.state.email,
           username: this.state.username,
+          imageUrl: this.state.imageUrl,
           password: this.state.password,
         })
         .then((res) => {
-          console.log(res.data);
+          if (!res.data.code) {
+            this.setState({ user: res.data });
+            localStorage.setItem("token", res.data.token);
+            Swal.fire({
+              icon: "success",
+              title: this.state.success,
+            });
+            console.log(this.state.user);
+          } else {
+            this.setState({ failed: "email or username already exists" });
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: this.state.failed,
+            });
+          }
         })
-        .catch((err) => console.log(err));
-      this.setState({ success: "your account has been created successfully" });
+        .catch((err) => {
+          this.setState({ failed: "email or username already exists" });
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: this.state.failed,
+          });
+        });
     }
   }
   submitLogIn(e) {
@@ -85,19 +132,32 @@ class App extends React.Component {
         email: this.state.email,
         password: this.state.password,
       })
-      .then(({ data }) => {
-        if (data == true) {
-          this.setState({ isLoggedIn: data });
+      .then((result) => {
+        if (result.data.logged == true) {
+          this.setState({ isLoggedIn: result.data.logged 
+          });
+          localStorage.setItem("token", result.data.data.token);
+          localStorage.setItem("isLoggedIn", true);
           this.props.history.push("/");
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "Password or email is incorrect!",
+          });
         }
       });
   }
+
   onSubmitPost(e) {
     console.log("clicked");
   }
   onLogOut(e) {
     e.preventDefault();
-    this.setState({ isLoggedIn: false });
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("token");
+    this.setState({ isLoggedIn: false, currentUser: null });
+    this.props.history.push("/signin");
   }
 
   render() {
@@ -144,7 +204,7 @@ class App extends React.Component {
                     <a className="nav-link active" href="#"></a>
                   </li>
                   <li className="nav-item dropdown">
-                    {!this.state.isLoggedIn ? (
+                    {!this.isAuthenticated() ? (
                       <div>
                         {" "}
                         <a
@@ -177,25 +237,31 @@ class App extends React.Component {
                       <button
                         className="btn btn-outline-success LogOut"
                         type="submit"
-                        onClick={this.onLogOut.bind(this)}
+                        onClick={this.onLogOut}
                       >
                         Log out
                       </button>
                     )}
                   </li>
-                  {this.state.isLoggedIn ? (
+                  {this.isAuthenticated() ? (
                     <li className="nav-item">
-                      <Link
-                        to="/story"
-                        className="nav-link active"
-                        // aria-current="page"
-                      >
+                      <Link to="/story" className="nav-link active">
                         Write an article
+                      </Link>
+                    </li>
+                  ) : null}
+                  {this.isAuthenticated() ? (
+                    <li className="nav-item">
+                      <Link to="/blogs" className="nav-link active">
+                        My Blogs
                       </Link>
                     </li>
                   ) : null}
                 </ul>
                 <form className="d-flex">
+                  {this.state.isLoggedIn ? (
+                    <h4 id="welcome">Welcome, {this.state.currentUser}</h4>
+                  ) : null}
                   <input
                     className="form-control me-2 search-bar"
                     type="search"
@@ -214,12 +280,16 @@ class App extends React.Component {
             {/* A <Switch> looks through its children <Route>s and
           renders the first one that matches the current URL. */}
             <Switch>
+              <Route path="/blogs">
+                <UserBlogs />
+              </Route>
               <Route path="/story">
                 <User
                   handleChange={this.handleChange.bind(this)}
                   onSubmitPost={this.onSubmitPost.bind(this)}
                 />
               </Route>
+
               <Route path="/signup">
                 <SignUp
                   handleChange={this.handleChange.bind(this)}

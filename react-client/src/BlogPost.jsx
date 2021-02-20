@@ -1,14 +1,17 @@
 import React from "react";
+import axios from "axios";
 
-export default function BlogPost({ Post }) {
+export default function BlogPost({ Post,user_post}) {
+
+
   return (
-    <div className="blog ">
+    <div className="blog " >
       <h2 className="ui header">
         <img
-          src="https://bookingagentinfo.com/wp-content/uploads/2018/05/Nargis-Fakhri-Contact-Information.jpg"
+          src={user_post.imageUrl}
           className="ui circular image"
         />
-        Author
+        {user_post.username}
         <div className="info-line ">{Post.createAt}</div>
       </h2>
       <h1 className="ui dividing header  ">{Post.title}</h1>

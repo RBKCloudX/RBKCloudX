@@ -43,31 +43,49 @@ module.exports = {
       const query = `select password from users where email = "${req.body.email}"`;
       db.query(query, (err, result) => {
         if (err) {
-          reject(err);
+          res.send(err);
         } else {
-          bcrypt.compare(
-            req.body.password,
-            result[0].password,
-            (err, result) => {
-              if (err) {
-                res.send(err);
-              } else {
-                const token = jwt.sign(
-                  {
-                    data: req.body.email,
-                  },
-                  "secret",
-                  { expiresIn: "24h" }
-                );
-                res.send({
-                  logged: result,
-                  data: { email: req.body.email, token: token },
-                });
+          // we need to handle the error when we don't find the email in the db
+          if (result[0] == undefined) {
+            res.end("invalid email or password");
+          } else {
+            bcrypt.compare(
+              req.body.password,
+              result[0].password,
+              (err, result) => {
+                if (err) {
+                  res.send(err);
+                  reject(err);
+                } else {
+                  const token = jwt.sign(
+                    {
+                      data: req.body.email,
+                    },
+                    "secret",
+                    { expiresIn: "24h" }
+                  );
+                  res.send({
+                    logged: result,
+                    data: { email: req.body.email, token: token },
+                  });
+                }
               }
-            }
-          );
+            );
+          }
         }
       });
     });
   },
+  getUserdata:(req, res)=>{
+    const sql=`select username,imageUrl from users where id= "${req.params.id}"`
+    console.log(req.params)
+    db.query(sql, (err, result) => {
+      console.log(result[0]);
+      if(err){
+        res.send(err)
+      }else{
+        res.send(result[0])
+      }
+    })
+  }
 };

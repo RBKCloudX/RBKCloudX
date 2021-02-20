@@ -727,3 +727,22 @@ form#login-form:after {
   margin: auto;
 }
 /* -------------------------UserBlog CSS----------------------- */
+
+/* ----------------post-component------------------------------- */
+.input{
+width: 100%;
+border-radius: none !important;
+border-top: none !important;
+border-right: none !important;
+border-bottom: none !important;
+}
+.active{
+border-top: none !important;
+border-right: none !important;
+border-bottom: none !important;
+}
+.publish-btn{
+  position: relative;
+  margin-left: 40%;
+  margin-bottom: 5%;
+}

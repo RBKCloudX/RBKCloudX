@@ -2,7 +2,7 @@ const db = require("../DB/index");
 
 module.exports = {
   getAll: (req, res) => {
-    const q = "SELECT * FROM blogs ";
+    const q = "SELECT * FROM blogs ORDER BY createdAt DESC";
     db.query(q, (err, blogs) => {
       if (err) res.send(err);
       else {
@@ -21,23 +21,21 @@ module.exports = {
     });
   },
   newStory: (req, res) => {
-    const query= `SELECT id FROM users WHERE email= "${req.body.email}"`
+    const query = `SELECT id FROM users WHERE email= "${req.body.email}"`;
     db.query(query, (err, result) => {
-      console.log("==>",result);
-      if(err){
-        res.send(err)
-      }else{
-        const sql= `INSERT INTO blogs (id, title, body) VALUES("${result[0].id}", "${req.body.title}", "${req.body.body}")`
+      console.log("==>", result);
+      if (err) {
+        res.send(err);
+      } else {
+        const sql = `INSERT INTO blogs (id, title, body) VALUES("${result[0].id}", "${req.body.title}", "${req.body.body}")`;
         db.query(sql, (err, result) => {
-          if(err){
-            res.send(err)
+          if (err) {
+            res.send(err);
+          } else {
+            res.send("done");
           }
-          else{
-            res.send("done")
-          }
-        })
+        });
       }
-    })
+    });
   },
 };
-

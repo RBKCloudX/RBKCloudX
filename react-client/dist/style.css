@@ -757,8 +757,9 @@ form#login-form:after {
 }
 .userblog-container {
   position: relative;
+  width: 90% !important;
   margin-top: 5%;
-  margin-left: 35%;
+  margin-left: 8%;
   margin-bottom: 5%;
 }
 #title-userblogs {
@@ -766,4 +767,7 @@ form#login-form:after {
 }
 .displaying-social-icon {
   display: flex !important;
+}
+.menu {
+  width: 90% !important;
 }

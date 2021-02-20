@@ -1,16 +1,13 @@
 import React from "react";
-
-export default function BlogPost({ Post }) {
+import moment from "moment";
+export default function BlogPost({ Post, user_post }) {
   return (
     <div className="blog ">
       <h2 className="ui header">
-        <img
-          src="https://bookingagentinfo.com/wp-content/uploads/2018/05/Nargis-Fakhri-Contact-Information.jpg"
-          className="ui circular image"
-        />
-        Author
-        <div className="info-line ">{Post.createAt}</div>
+        <img src={user_post.imageUrl} className="ui circular image" />
+        {user_post.username}
       </h2>
+      <h6 className="info-line ">{moment(Post.createdAt).fromNow()}</h6>
       <h1 className="ui dividing header  ">{Post.title}</h1>
       <div className="ui top attached header fade-in">
         {Post.body.split(".").map((para, i) => (
@@ -22,3 +19,4 @@ export default function BlogPost({ Post }) {
     </div>
   );
 }
+// test

@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import { createBrowserHistory } from "history";
 // import Dummy_data
-import data from "../../Dummy_data.js";
+// import data from "../../Dummy_data.js";
 // import the Blog component
 import Footer from "./Footer.jsx";
 import axios from "axios";
@@ -26,7 +26,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: data,
+      data: [],
       first_name: "",
       last_name: "",
       bday: "",
@@ -37,27 +37,67 @@ class App extends React.Component {
       passwordRepeat: "",
       Post: {},
       detail: false,
+      title: "",
+      body: "",
       failed: "",
       success: "",
       isLoggedIn: false,
+      currentUserblogs: [],
       currentUser: null,
+      user_post: {},
       user: {},
     };
     this.isAuthenticated = this.isAuthenticated.bind(this);
     this.onLogOut = this.onLogOut.bind(this);
+    this.fetchUserBlogs = this.fetchUserBlogs.bind(this);
   }
-  // setUsername function that will check using the token if the token valid for a specific user then he will stay logged in
-  setCurrentState() {
-    localStorage.setItem("isLoggedIn", false);
-    const token = localStorage.getItem("token");
-    axios.get("/api/verify/" + token).then(({ data }) => {
-      this.setState({ currentUser: data, isLoggedIn: true });
-      console.log(this.state.currentUser);
-    });
+  //get the blogs of the current user
+  fetchUserBlogs() {
+    axios
+      .get("api/users/user/email/" + this.state.currentUser)
+      .then(({ data }) => {
+        this.setState({ currentUserblogs: data });
+      })
+      .catch((err) => console.log(err));
+  }
+  // to get id of userPost
+  getUserData(id) {
+    axios
+      .get("api/users/user/" + id)
+      .then(({ data }) => {
+        this.setState({ user_post: data });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+  // get req to get user data
+
+  fetchAllData() {
+    axios
+      .get("api/blogs")
+      .then(({ data }) => {
+        this.setState({ data: data });
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
   }
   componentDidMount() {
     this.setCurrentState();
+    this.fetchAllData();
+    console.log(this.state.blog);
   }
+  // setUsername function that will check using the token if the token valid for a specific user then he will stay logged in
+  setCurrentState() {
+    const token = localStorage.getItem("token");
+    axios.get("/api/verify/" + token).then(({ data }) => {
+      this.setState({ currentUser: data, isLoggedIn: true });
+      localStorage.setItem("isLoggedIn", true);
+      localStorage.setItem("token", token);
+      console.log("=>>>", data);
+    });
+  }
+
   isAuthenticated() {
     return localStorage.getItem("isLoggedIn");
   }
@@ -85,6 +125,15 @@ class App extends React.Component {
         icon: "error",
         title: "Oops...",
         text: this.state.failed,
+        footer:
+          "wrong password failed, password must be atleast more than 8 characters !",
+      });
+    } else if (this.state.password.length < 8) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: this.state.failed,
+        footer: "password must be atleast more than 8 characters !",
       });
     } else {
       axios
@@ -105,6 +154,7 @@ class App extends React.Component {
               icon: "success",
               title: this.state.success,
             });
+            this.props.history.push("/signin");
             console.log(this.state.user);
           } else {
             this.setState({ failed: "email or username already exists" });
@@ -112,6 +162,7 @@ class App extends React.Component {
               icon: "error",
               title: "Oops...",
               text: this.state.failed,
+              footer: "email or username already exists!",
             });
           }
         })
@@ -121,6 +172,7 @@ class App extends React.Component {
             icon: "error",
             title: "Oops...",
             text: this.state.failed,
+            footer: "email or username already exists!",
           });
         });
     }
@@ -134,8 +186,7 @@ class App extends React.Component {
       })
       .then((result) => {
         if (result.data.logged == true) {
-          this.setState({ isLoggedIn: result.data.logged 
-          });
+          this.setState({ isLoggedIn: result.data.logged });
           localStorage.setItem("token", result.data.data.token);
           localStorage.setItem("isLoggedIn", true);
           this.props.history.push("/");
@@ -146,10 +197,27 @@ class App extends React.Component {
             text: "Password or email is incorrect!",
           });
         }
-      });
+      })
+      .catch((err) =>
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Password or email is incorrect!",
+        })
+      );
   }
 
   onSubmitPost(e) {
+    e.preventDefault();
+    axios
+      .post("api/blogs/newStory", {
+        email: this.state.currentUser,
+        title: this.state.title,
+        body: this.state.body,
+      })
+      .then(({ data }) => {
+        this.props.history.push("/");
+      });
     console.log("clicked");
   }
   onLogOut(e) {
@@ -206,7 +274,6 @@ class App extends React.Component {
                   <li className="nav-item dropdown">
                     {!this.isAuthenticated() ? (
                       <div>
-                        {" "}
                         <a
                           className="nav-link dropdown-toggle active"
                           href="#"
@@ -252,7 +319,11 @@ class App extends React.Component {
                   ) : null}
                   {this.isAuthenticated() ? (
                     <li className="nav-item">
-                      <Link to="/blogs" className="nav-link active">
+                      <Link
+                        to="/blogs"
+                        className="nav-link active"
+                        onClick={this.fetchUserBlogs}
+                      >
                         My Blogs
                       </Link>
                     </li>
@@ -281,7 +352,7 @@ class App extends React.Component {
           renders the first one that matches the current URL. */}
             <Switch>
               <Route path="/blogs">
-                <UserBlogs />
+                <UserBlogs data={this.state.currentUserblogs} />
               </Route>
               <Route path="/story">
                 <User
@@ -310,9 +381,14 @@ class App extends React.Component {
                     renderPost={this.renderPost.bind(this)}
                     data={this.state.data}
                     detail={this.state.detail}
+                    getUserData={this.getUserData.bind(this)}
                   />
                 ) : (
-                  <BlogPost Post={this.state.Post} detail={this.state.detail} />
+                  <BlogPost
+                    user_post={this.state.user_post}
+                    Post={this.state.Post}
+                    detail={this.state.detail}
+                  />
                 )}
               </Route>
               <Route path="/about">
@@ -328,5 +404,7 @@ class App extends React.Component {
     );
   }
 }
+
+//hhiuhgouiguoygouy
 
 export default withRouter(App);

@@ -76,16 +76,35 @@ module.exports = {
       });
     });
   },
-  getUserdata:(req, res)=>{
-    const sql=`select username,imageUrl from users where id= "${req.params.id}"`
-    console.log(req.params)
+  getUserdata: (req, res) => {
+    const sql = `select username,imageUrl from users where id= "${req.params.id}"`;
+    console.log(req.params);
     db.query(sql, (err, result) => {
       console.log(result[0]);
-      if(err){
-        res.send(err)
-      }else{
-        res.send(result[0])
+      if (err) {
+        res.send(err);
+      } else {
+        res.send(result[0]);
       }
-    })
-  }
+    });
+  },
+  getUserBlogs: (req, res) => {
+    const sql = `select id from users where email= "${req.params.email}"`;
+    db.query(sql, (err, result) => {
+      console.log(result[0].id);
+      if (err) {
+        res.send(err);
+      } else {
+        const skt = `select * from blogs where id = "${result[0].id}"`;
+        db.query(skt, (err, data) => {
+          console.log(data);
+          if (err) {
+            res.send(err);
+          } else {
+            res.send(data);
+          }
+        });
+      }
+    });
+  },
 };

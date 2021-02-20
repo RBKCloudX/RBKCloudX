@@ -36,7 +36,7 @@ const Footer = () => (
           </div>
 
           <div className="col-md-4 col-sm-6 col-xs-12">
-            <ul className="social-icons">
+            <ul className="social-icons displaying-social-icon">
               <li>
                 <a
                   className="facebook ui circular facebook icon button"

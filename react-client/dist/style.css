@@ -746,3 +746,24 @@ form#login-form:after {
   margin-left: 40%;
   margin-bottom: 5%;
 }
+
+/* --------------- userblogs -------------------------*/
+.image-bg {
+  background-color: lightgray !important;
+  max-width: fit-content !important;
+  position: relative;
+  margin-left: 0px !important;
+  margin-right: 50% !important;
+}
+.userblog-container {
+  position: relative;
+  margin-top: 5%;
+  margin-left: 35%;
+  margin-bottom: 5%;
+}
+#title-userblogs {
+  font-family: "Playfair Display", serif;
+}
+.displaying-social-icon {
+  display: flex !important;
+}

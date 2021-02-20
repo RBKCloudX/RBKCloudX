@@ -42,12 +42,23 @@ class App extends React.Component {
       failed: "",
       success: "",
       isLoggedIn: false,
+      currentUserblogs: [],
       currentUser: null,
       user_post: {},
       user: {},
     };
     this.isAuthenticated = this.isAuthenticated.bind(this);
     this.onLogOut = this.onLogOut.bind(this);
+    this.fetchUserBlogs = this.fetchUserBlogs.bind(this);
+  }
+  //get the blogs of the current user
+  fetchUserBlogs() {
+    axios
+      .get("api/users/user/email/" + this.state.currentUser)
+      .then(({ data }) => {
+        this.setState({ currentUserblogs: data });
+      })
+      .catch((err) => console.log(err));
   }
   // to get id of userPost
   getUserData(id) {
@@ -308,7 +319,11 @@ class App extends React.Component {
                   ) : null}
                   {this.isAuthenticated() ? (
                     <li className="nav-item">
-                      <Link to="/blogs" className="nav-link active">
+                      <Link
+                        to="/blogs"
+                        className="nav-link active"
+                        onClick={this.fetchUserBlogs}
+                      >
                         My Blogs
                       </Link>
                     </li>
@@ -337,7 +352,7 @@ class App extends React.Component {
           renders the first one that matches the current URL. */}
             <Switch>
               <Route path="/blogs">
-                <UserBlogs />
+                <UserBlogs data={this.state.currentUserblogs} />
               </Route>
               <Route path="/story">
                 <User
@@ -389,5 +404,7 @@ class App extends React.Component {
     );
   }
 }
+
+//hhiuhgouiguoygouy
 
 export default withRouter(App);

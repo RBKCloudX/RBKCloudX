@@ -746,15 +746,28 @@ form#login-form:after {
   margin-left: 40%;
   margin-bottom: 5%;
 }
-/* .blog-container {
-  display: flex;
-  flex-direction: row;
-  inset-block: inherit;
-}
-.test {
-  float: right;
-} */
 
-.column-container {
-  max-width: 40% !important;
+/* --------------- userblogs -------------------------*/
+.image-bg {
+  background-color: lightgray !important;
+  max-width: fit-content !important;
+  position: relative;
+  margin-left: 0px !important;
+  margin-right: 50% !important;
+}
+.userblog-container {
+  position: relative;
+  width: 90% !important;
+  margin-top: 5%;
+  margin-left: 8%;
+  margin-bottom: 5%;
+}
+#title-userblogs {
+  font-family: "Playfair Display", serif;
+}
+.displaying-social-icon {
+  display: flex !important;
+}
+.menu {
+  width: 90% !important;
 }

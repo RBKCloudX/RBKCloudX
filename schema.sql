@@ -23,7 +23,7 @@ CREATE TABLE blogs (
     post_id INT NOT NULL AUTO_INCREMENT,
     id int,
     -- post_id
-    title VARCHAR(75) NOT NULL,
+    title VARCHAR(275) NOT NULL,
     body LONGTEXT NOT NULL,
     createdAt datetime DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(post_id),
@@ -88,7 +88,7 @@ Read emails several times over without making a decision on what to do with them
 
 Fill your time with unimportant tasks that other people ask you to do, instead of getting on with the important tasks already on your list
 
-finally, Wait to be in the “right mood,” or wait for the “right time” to tackle a task
+finally, Wait to be in the right mood, or wait for the “right time” to tackle a task
 
 Now we are done with that, I really hope that you enjoyed my article, also I will do my best to share my knowledge with you guys and I hope I did not make it so long if so go wash your face and grub a cuppa! Comment below if you have anything to add`"
     );
@@ -101,27 +101,4 @@ let's say you have a great project idea and you have the worst pair in the world
 In this way, he will feel that you are forcing him to work on yours, but he will think that you are inviting him to make that idea together and he will listen to you
 I tried to make these tips as simple as I could, also I hope that I deliver a clear message for you guys
 If you have any idea, comment below!!`"
-    );
-    INSERT INTO blogs (id,title, body)
-VALUES(2,
-        'The différence between arrays and linked lists/Hash table
-',
-        "`First of all, we will be defining what is an array : An array is a kind of data structure that can hold for us some data type like booleans, strings, numbers, and even array itself or object and those other kinds of data, also null or undefined
-The array is stored such that the position of each element can be computed from its index tuple by a mathematical formula
-The array store the data as linear storage
-Secondly, a linked list is another data structure, you basically can think of it as a box of elements that can be anywhere in the memory
-The thing is that the linked list has a beginner part which is the “head” and it will be ending up with the tail which is the last part of the linked list
-every box in this data are pointing to each other starting from the head going to the next box and the next box and so on until it will be pointed to the tail
-the great thing about a linked list is when you want to add something you just create a new “node” which is this box that we talked about and point the tail of the previous node with the head of that node and Its tail will be pointing to the next head of the next node
-if you want to delete a node you can simply change the point from the previous one and point it to the next node ( tail ) then it will be deleted
-we do it this way because the linked list is considered as a chain of nodes
-nodes are more useful than the array when we will be having a huge data to store because it is way optimal to iterate over it than the array
-Finally, I will explain what is a Hash table, How it is working
-first of all, I want you to imagine that the hash table is a big box that has an array inside it as storage data and another little box a secure function, you may not understand what is a secure function, I actually call it that way because this function does some a good stuff for us, so what do you think that this kind of data has that name, hash means encrypting data that will be stored inside its storage
-let me try to explain what is going on inside the hash table
-so whenever we want to add (insert) a specific element, let’s say we want to add “cat” as a key and its value will be “cute”, it will return undefined
-the cat will be passed to this secure function to change it and make it a number in the array that will be stored according to the index and then the value will be saved right next to the index
-whenever you want to get an element from the hashing table, you will pass the key again which is “cat” then the hash table will take and pass it to the ‘security function’ that will transfer it again as the same number that it has been save as
-then will go directly to the index and give you back the next element which is the value that you’re looking for
-comment below if you have anything else to add`"
     );

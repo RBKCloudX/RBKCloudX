@@ -76,4 +76,16 @@ module.exports = {
       });
     });
   },
+  getUserdata:(req, res)=>{
+    const sql=`select username,imageUrl from users where id= "${req.params.id}"`
+    console.log(req.params)
+    db.query(sql, (err, result) => {
+      console.log(result[0]);
+      if(err){
+        res.send(err)
+      }else{
+        res.send(result[0])
+      }
+    })
+  }
 };

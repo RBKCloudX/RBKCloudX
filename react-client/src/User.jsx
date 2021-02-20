@@ -1,10 +1,6 @@
 import React from "react";
 const User = ({ handleChange, onSubmitPost }) => (
   <div className="feed">
-    <a className="ui image label">
-      <img src="https://cdn.dribbble.com/users/5547197/screenshots/14248889/20200922_201013_4x.jpg" />
-      Joe
-    </a>
     <div className="column">
       <div className="ui raised segment">
         <div className="ui two column grid">

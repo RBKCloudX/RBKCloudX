@@ -55,6 +55,7 @@ class App extends React.Component {
     axios.get("/api/verify/" + token).then(({ data }) => {
       this.setState({ currentUser: data, isLoggedIn: true });
       localStorage.setItem("isLoggedIn", true);
+      localStorage.setItem("token", token);
       console.log("=>>>", data);
     });
   }
@@ -86,6 +87,15 @@ class App extends React.Component {
         icon: "error",
         title: "Oops...",
         text: this.state.failed,
+        footer:
+          "wrong password failed, password must be atleast more than 8 characters !",
+      });
+    } else if (this.state.password.length < 8) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: this.state.failed,
+        footer: "password must be atleast more than 8 characters !",
       });
     } else {
       axios
@@ -114,6 +124,7 @@ class App extends React.Component {
               icon: "error",
               title: "Oops...",
               text: this.state.failed,
+              footer: "email or username already exists!",
             });
           }
         })
@@ -123,6 +134,7 @@ class App extends React.Component {
             icon: "error",
             title: "Oops...",
             text: this.state.failed,
+            footer: "email or username already exists!",
           });
         });
     }
@@ -147,7 +159,14 @@ class App extends React.Component {
             text: "Password or email is incorrect!",
           });
         }
-      });
+      })
+      .catch((err) =>
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Password or email is incorrect!",
+        })
+      );
   }
 
   onSubmitPost(e) {

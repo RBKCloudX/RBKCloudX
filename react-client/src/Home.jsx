@@ -1,12 +1,8 @@
 import React from "react";
-const Home = ({ data, renderPost, detail,getUserData,getUserImageAndUsername }) => (
+const Home = ({ data, renderPost, detail, getUserData }) => (
   <div>
     {data.map((blog, index) => (
-      <div className="feed" key={index} onClick={()=> getUserData(blog.id)}>
-        <a className="ui image label">
-          <img src="https://cdn.dribbble.com/users/5547197/screenshots/14248889/20200922_201013_4x.jpg" />
-          Joe
-        </a>
+      <div className="feed" key={index} onClick={() => getUserData(blog.id)}>
         <div className="description">{blog.createAt}</div>
         <div className="column">
           <div className="ui two column grid">

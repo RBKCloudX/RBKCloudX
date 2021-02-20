@@ -79,11 +79,11 @@ class App extends React.Component {
   // setUsername function that will check using the token if the token valid for a specific user then he will stay logged in
   setCurrentState() {
     const token = localStorage.getItem("token");
-    axios.get("/api/verify/" + token).then(({ data }) => {
-      this.setState({ currentUser: data, isLoggedIn: true });
+    axios.get("/api/verify/" + token).then((res) => {
+      this.setState({ currentUser: res.data, isLoggedIn: true });
       localStorage.setItem("isLoggedIn", true);
       localStorage.setItem("token", token);
-      console.log("=>>>", data);
+      console.log("=>>>", res);
     });
   }
 
@@ -205,8 +205,10 @@ class App extends React.Component {
         body: this.state.body,
       })
       .then(({ data }) => {
+        this.fetchAllData();
         this.props.history.push("/");
       });
+
     console.log("clicked");
   }
   onLogOut(e) {

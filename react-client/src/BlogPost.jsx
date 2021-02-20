@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+
 export default function BlogPost({ Post, user_post }) {
   return (
     <div className="blog ">

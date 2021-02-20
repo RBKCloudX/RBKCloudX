@@ -746,3 +746,15 @@ form#login-form:after {
   margin-left: 40%;
   margin-bottom: 5%;
 }
+/* .blog-container {
+  display: flex;
+  flex-direction: row;
+  inset-block: inherit;
+}
+.test {
+  float: right;
+} */
+
+.column-container {
+  max-width: 40% !important;
+}

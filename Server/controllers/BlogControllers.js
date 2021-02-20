@@ -20,8 +20,24 @@ module.exports = {
       }
     });
   },
+  newStory: (req, res) => {
+    const query= `SELECT id FROM users WHERE email= "${req.body.email}"`
+    db.query(query, (err, result) => {
+      console.log("==>",result);
+      if(err){
+        res.send(err)
+      }else{
+        const sql= `INSERT INTO blogs (id, title, body) VALUES("${result[0].id}", "${req.body.title}", "${req.body.body}")`
+        db.query(sql, (err, result) => {
+          if(err){
+            res.send(err)
+          }
+          else{
+            res.send("done")
+          }
+        })
+      }
+    })
+  },
 };
 
-// module.exports.addPost = (req, res) => {
-//   const query = `INSERT INTO blogs (title,body) VALUES("${req.body.title}","${req.body.body}")`;
-// };

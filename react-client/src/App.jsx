@@ -10,7 +10,7 @@ import {
 } from "react-router-dom";
 import { createBrowserHistory } from "history";
 // import Dummy_data
-import data from "../../Dummy_data.js";
+// import data from "../../Dummy_data.js";
 // import the Blog component
 import Footer from "./Footer.jsx";
 import axios from "axios";
@@ -26,7 +26,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: data,
+      data: [],
       first_name: "",
       last_name: "",
       bday: "",
@@ -37,17 +37,40 @@ class App extends React.Component {
       passwordRepeat: "",
       Post: {},
       detail: false,
+      title:"",
+      body:"",
       failed: "",
       success: "",
       isLoggedIn: false,
       currentUser: null,
+      user_post:{},
       user: {},
     };
     this.isAuthenticated = this.isAuthenticated.bind(this);
     this.onLogOut = this.onLogOut.bind(this);
   }
+  // to get id of userPost
+  getUserData(id){
+    axios.get("api/users/user/"+id).then(({data})=>{
+      console.log("hi", {user_post:data});
+      this.setState({user_post:data})
+    }).catch((error)=>{
+      console.log(error);
+    })
+  }
+  // get req to get user data 
+
+  fetchAllData(){
+axios.get("api/blogs").then(({data}) =>{
+  this.setState({data:data})
+  console.log(data);
+}
+).catch(err => console.log(err))
+  }
   componentDidMount() {
     this.setCurrentState();
+    this.fetchAllData()
+    console.log(this.state.blog);
   }
   // setUsername function that will check using the token if the token valid for a specific user then he will stay logged in
   setCurrentState() {
@@ -170,6 +193,15 @@ class App extends React.Component {
   }
 
   onSubmitPost(e) {
+    e.preventDefault();
+    axios.post("api/blogs/newStory", {
+      email: this.state.currentUser,
+      title: this.state.title,
+      body: this.state.body
+    }).then(({data}) => {
+
+   this.props.history.push("/")
+    })
     console.log("clicked");
   }
   onLogOut(e) {
@@ -226,7 +258,6 @@ class App extends React.Component {
                   <li className="nav-item dropdown">
                     {!this.isAuthenticated() ? (
                       <div>
-                        {" "}
                         <a
                           className="nav-link dropdown-toggle active"
                           href="#"
@@ -330,9 +361,11 @@ class App extends React.Component {
                     renderPost={this.renderPost.bind(this)}
                     data={this.state.data}
                     detail={this.state.detail}
+                    getUserData={this.getUserData.bind(this)}
+                    getUserImageAndUsername={this.getUserImageAndUsername.bind(this)}
                   />
                 ) : (
-                  <BlogPost Post={this.state.Post} detail={this.state.detail} />
+                  <BlogPost user_post={this.state.user_post} Post={this.state.Post} detail={this.state.detail} />
                 )}
               </Route>
               <Route path="/about">

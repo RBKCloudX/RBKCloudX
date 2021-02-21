@@ -6,5 +6,5 @@ router.get("/", BlogControllers.getAll);
 router.get("/:id", BlogControllers.getUserBlogs);
 router.post("/newStory", BlogControllers.newStory);
 router.put("/:id", BlogControllers.updateStory);
-
+router.delete("/:id", BlogControllers.deleteStory)
 module.exports = router;

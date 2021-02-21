@@ -47,11 +47,23 @@ class App extends React.Component {
       user_post: {},
       user: {},
       updateBtn: false,
+      counter: 0,
     };
+
     this.isAuthenticated = this.isAuthenticated.bind(this);
     this.onLogOut = this.onLogOut.bind(this);
     this.fetchUserBlogs = this.fetchUserBlogs.bind(this);
   }
+  // ta7ayel
+  starting() {
+    console.log("hello");
+    if (this.state.counter === 0) {
+      location.reload();
+      this.setState({ counter: 1 });
+      return;
+    }
+  }
+
   //get the blogs of the current user
   fetchUserBlogs() {
     axios
@@ -83,6 +95,7 @@ class App extends React.Component {
       })
       .catch((err) => console.log(err));
   }
+
   componentDidMount() {
     this.setCurrentState();
     this.fetchAllData();
@@ -196,6 +209,7 @@ class App extends React.Component {
           localStorage.setItem("token", result.data.data.token);
           localStorage.setItem("isLoggedIn", true);
           this.props.history.push("/");
+          this.starting();
         } else {
           Swal.fire({
             icon: "error",
@@ -257,6 +271,18 @@ class App extends React.Component {
   setCurrentPost(newPost){
     console.log(newPost);
     this.setState({Post:newPost})
+  // obj.post_id
+  }
+  deletePost(obj) {
+    console.log("objina =>", obj.post_id);
+
+    axios
+      .delete("api/blogs/" + obj.post_id)
+      .then((data) => {
+        this.fetchUserBlogs();
+        this.fetchAllData();
+      })
+      .catch((err) => console.log(err));
   }
 
   render() {
@@ -389,6 +415,7 @@ class App extends React.Component {
                   state={this.state.updateBtn}
                   handleChange={this.handleChange.bind(this)}
                   sendUpdatedPost={this.sendUpdatedPost.bind(this)}
+                  deletePost={this.deletePost.bind(this)}
                 />
               </Route>
               <Route path="/story">
@@ -444,7 +471,5 @@ class App extends React.Component {
     );
   }
 }
-
-
 
 export default withRouter(App);

@@ -6,6 +6,7 @@ const UserBlogs = ({
   state,
   handleChange,
   sendUpdatedPost,
+  deletePost,
 }) => {
   console.log(data[0]);
   return (
@@ -24,7 +25,12 @@ const UserBlogs = ({
                     update
                   </button>
                   <div className="or"></div>
-                  <button className="ui red button">delete</button>
+                  <button
+                    className="ui red button"
+                    onClick={() => deletePost(blog)}
+                  >
+                    delete
+                  </button>
                 </div>
               ) : (
                 <div>
@@ -53,7 +59,12 @@ const UserBlogs = ({
                       </div>
                     </div>
                     <div className="or"></div>
-                    <button className="ui red button">delete</button>
+                    <button
+                      className="ui red button"
+                      onClick={() => deletePost(blog)}
+                    >
+                      delete
+                    </button>
                   </div>
                 </div>
               )}

@@ -254,6 +254,10 @@ class App extends React.Component {
         this.props.history.push("/blogs");
       });
   }
+  setCurrentPost(newPost){
+    console.log(newPost);
+    this.setState({currentPost:newPost})
+  }
 
   render() {
     return (
@@ -415,12 +419,14 @@ class App extends React.Component {
                     data={this.state.data}
                     detail={this.state.detail}
                     getUserData={this.getUserData.bind(this)}
+                    setCurrentPost={this.setCurrentPost.bind(this)}
                   />
                 ) : (
                   <BlogPost
                     user_post={this.state.user_post}
                     Post={this.state.Post}
                     detail={this.state.detail}
+                    Posts={this.state.data}
                   />
                 )}
               </Route>

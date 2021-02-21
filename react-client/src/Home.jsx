@@ -1,11 +1,11 @@
 import React from "react";
 import moment from "moment";
 
-const Home = ({ data, renderPost, detail, getUserData }) => (
+const Home = ({ data, renderPost, detail, getUserData , setCurrentPost}) => (
   <div>
     {data.map((blog, index) => (
-      <div className="feed" key={index} onClick={() => getUserData(blog.id)}>
-        <div className="column">
+      <div className="feed" key={index}  onClick={() => getUserData(blog.id)}>
+        <div className="column" >
           <div className="ui two column grid">
             <div className="ui raised segment">
               <a className="ui whitesmoke ribbon label">

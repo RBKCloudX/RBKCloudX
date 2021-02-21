@@ -268,7 +268,11 @@ class App extends React.Component {
         this.props.history.push("/blogs");
       });
   }
+  setCurrentPost(newPost){
+    console.log(newPost);
+    this.setState({Post:newPost})
   // obj.post_id
+  }
   deletePost(obj) {
     console.log("objina =>", obj.post_id);
 
@@ -442,12 +446,15 @@ class App extends React.Component {
                     data={this.state.data}
                     detail={this.state.detail}
                     getUserData={this.getUserData.bind(this)}
+                    
                   />
                 ) : (
                   <BlogPost
                     user_post={this.state.user_post}
                     Post={this.state.Post}
                     detail={this.state.detail}
+                    Posts={this.state.data}
+                    setCurrentPost={this.setCurrentPost.bind(this)}
                   />
                 )}
               </Route>

@@ -20,11 +20,14 @@ const Home = ({ data, renderPost, detail, getUserData }) => (
                 {blog.title}
               </h1>
               <div>
-                {blog.body.split(".").map((paragraph, index) => (
-                  <p className="body" key={index}>
-                    {paragraph}
-                  </p>
-                ))}
+                {blog.body
+                  .split(".")
+                  .slice(0, 1)
+                  .map((paragraph, index) => (
+                    <p className="body" key={index}>
+                      {paragraph}
+                    </p>
+                  ))}
               </div>
             </div>
           </div>

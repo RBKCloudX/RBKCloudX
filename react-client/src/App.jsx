@@ -47,11 +47,23 @@ class App extends React.Component {
       user_post: {},
       user: {},
       updateBtn: false,
+      counter: 0,
     };
+
     this.isAuthenticated = this.isAuthenticated.bind(this);
     this.onLogOut = this.onLogOut.bind(this);
     this.fetchUserBlogs = this.fetchUserBlogs.bind(this);
   }
+  // ta7ayel
+  starting() {
+    console.log("hello");
+    if (this.state.counter === 0) {
+      location.reload();
+      this.setState({ counter: 1 });
+      return;
+    }
+  }
+
   //get the blogs of the current user
   fetchUserBlogs() {
     axios
@@ -83,6 +95,7 @@ class App extends React.Component {
       })
       .catch((err) => console.log(err));
   }
+
   componentDidMount() {
     this.setCurrentState();
     this.fetchAllData();
@@ -91,11 +104,16 @@ class App extends React.Component {
   // setUsername function that will check using the token if the token valid for a specific user then he will stay logged in
   setCurrentState() {
     const token = localStorage.getItem("token");
-    axios.get("/api/verify/" + token).then((res) => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    axios.get("/api/verify/", config).then((res) => {
+      const token = res.config.headers.Authorization.replace("Bearer ", "");
       this.setState({ currentUser: res.data, isLoggedIn: true });
       localStorage.setItem("isLoggedIn", true);
       localStorage.setItem("token", token);
-      console.log("=>>>", res);
     });
   }
 
@@ -191,6 +209,7 @@ class App extends React.Component {
           localStorage.setItem("token", result.data.data.token);
           localStorage.setItem("isLoggedIn", true);
           this.props.history.push("/");
+          this.starting();
         } else {
           Swal.fire({
             icon: "error",
@@ -252,13 +271,14 @@ class App extends React.Component {
   // obj.post_id
   deletePost(obj) {
     console.log("objina =>", obj.post_id);
-    axios
-    .delete("api/blogs/" + obj.post_id)
-    .then((data) => {
-      console.log("done")
-    })
-    .catch((err) => console.log(err));
 
+    axios
+      .delete("api/blogs/" + obj.post_id)
+      .then((data) => {
+        this.fetchUserBlogs();
+        this.fetchAllData();
+      })
+      .catch((err) => console.log(err));
   }
 
   render() {
@@ -444,7 +464,5 @@ class App extends React.Component {
     );
   }
 }
-
-//hhiuhgouiguoygouy
 
 export default withRouter(App);

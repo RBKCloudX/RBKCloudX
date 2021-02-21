@@ -21,7 +21,7 @@ const Home = ({ data, renderPost, detail, getUserData }) => (
               </h1>
               <div>
                 {blog.body
-                  .split(".")
+                  .split("\n")
                   .slice(0, 1)
                   .map((paragraph, index) => (
                     <p className="body" key={index}>

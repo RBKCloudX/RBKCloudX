@@ -11,7 +11,7 @@ module.exports = {
     });
   },
   getUserBlogs: (req, res) => {
-    const query = `select * from blogs where id= "${req.params.id}" `;
+    const query = `select * from blogs where id= "${req.params.id}" ORDER BY createdAt DESC`;
     db.query(query, (err, result) => {
       if (err) {
         res.send(err);

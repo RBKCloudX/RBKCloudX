@@ -46,6 +46,7 @@ class App extends React.Component {
       currentUser: null,
       user_post: {},
       user: {},
+      updateBtn: false,
     };
     this.isAuthenticated = this.isAuthenticated.bind(this);
     this.onLogOut = this.onLogOut.bind(this);
@@ -232,7 +233,21 @@ class App extends React.Component {
   // update function
   updatePost(e) {
     e.preventDefault();
-    console.log("clicked");
+    this.setState({ updateBtn: !this.state.updateBtn });
+    console.log("clicked", { updateBtn: !this.state.updateBtn });
+  }
+  sendUpdatedPost(id) {
+    axios
+      .put("/api/blogs/" + id, {
+        title: this.state.title,
+        body: this.state.body,
+      })
+      .then((res) => {
+        this.fetchUserBlogs();
+        this.setState({ updateBtn: false });
+        this.fetchAllData();
+        this.props.history.push("/blogs");
+      });
   }
 
   render() {
@@ -362,6 +377,9 @@ class App extends React.Component {
                 <UserBlogs
                   data={this.state.currentUserblogs}
                   updatePost={this.updatePost.bind(this)}
+                  state={this.state.updateBtn}
+                  handleChange={this.handleChange.bind(this)}
+                  sendUpdatedPost={this.sendUpdatedPost.bind(this)}
                 />
               </Route>
               <Route path="/story">

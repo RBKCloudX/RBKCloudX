@@ -23,7 +23,6 @@ module.exports = {
   newStory: (req, res) => {
     const query = `SELECT id FROM users WHERE email= "${req.body.email}"`;
     db.query(query, (err, result) => {
-      console.log("==>", result);
       if (err) {
         res.send(err);
       } else {

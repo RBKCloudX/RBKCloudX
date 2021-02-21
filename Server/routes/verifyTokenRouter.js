@@ -7,9 +7,7 @@ TokenRouter.get("/", (req, res, next) => {
     const bearer = header.split(" ");
     const token = bearer[1];
     req.token = token;
-    console.log("==>>>>>>>>>>>>>>>>", req.token);
     const access = jwt.verify(token, "zitouna");
-    console.log(access.data);
     res.send(access.data);
     next();
   } else {

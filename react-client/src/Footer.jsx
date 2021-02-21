@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import AboutUs from "./AboutUs.jsx";
+import AboutUs from "./NotFound.jsx";
 const Footer = () => (
   <footer className="site-footer">
     <div className="container">

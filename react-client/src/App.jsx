@@ -18,7 +18,7 @@ import SignUp from "./SignUp.jsx";
 import SignIn from "./LogIn.jsx";
 import Home from "./Home.jsx";
 import BlogPost from "./BlogPost.jsx";
-import AboutUs from "./AboutUs.jsx";
+import NotFound from "./NotFound.jsx";
 import UserBlogs from "./UserBlogs.jsx";
 import User from "./User.jsx";
 import Swal from "sweetalert2";
@@ -48,15 +48,16 @@ class App extends React.Component {
       user: {},
       updateBtn: false,
       counter: 0,
+      userBlogState: 1,
     };
 
     this.isAuthenticated = this.isAuthenticated.bind(this);
     this.onLogOut = this.onLogOut.bind(this);
     this.fetchUserBlogs = this.fetchUserBlogs.bind(this);
+    this.userBlogsState = this.userBlogsState.bind(this);
   }
   // ta7ayel
   starting() {
-    console.log("hello");
     if (this.state.counter === 0) {
       location.reload();
       this.setState({ counter: 1 });
@@ -91,7 +92,6 @@ class App extends React.Component {
       .get("api/blogs")
       .then(({ data }) => {
         this.setState({ data: data });
-        console.log(data);
       })
       .catch((err) => console.log(err));
   }
@@ -99,7 +99,6 @@ class App extends React.Component {
   componentDidMount() {
     this.setCurrentState();
     this.fetchAllData();
-    console.log(this.state.blog);
   }
   // setUsername function that will check using the token if the token valid for a specific user then he will stay logged in
   setCurrentState() {
@@ -120,9 +119,16 @@ class App extends React.Component {
   isAuthenticated() {
     return localStorage.getItem("isLoggedIn");
   }
-
+  // change state for userblogs when he post new blog to his empty list
+  userBlogsState() {
+    this.fetchUserBlogs();
+    if (!this.state.currentUserblogs.length) {
+      this.setState({ userBlogState: false });
+    } else {
+      this.setState({ userBlogState: true });
+    }
+  }
   renderPost(blog, detail) {
-    console.log("clicked", blog);
     this.setState({
       Post: blog,
       detail: detail,
@@ -132,7 +138,6 @@ class App extends React.Component {
 
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
-    console.log({ [e.target.name]: e.target.value });
   }
 
   // handleSubmit is for submitting data
@@ -174,7 +179,6 @@ class App extends React.Component {
               title: this.state.success,
             });
             this.props.history.push("/signin");
-            console.log(this.state.user);
           } else {
             this.setState({ failed: "email or username already exists" });
             Swal.fire({
@@ -237,10 +241,9 @@ class App extends React.Component {
       })
       .then(({ data }) => {
         this.fetchAllData();
+        this.userBlogsState();
         this.props.history.push("/");
       });
-
-    console.log("clicked");
   }
   onLogOut(e) {
     e.preventDefault();
@@ -253,7 +256,6 @@ class App extends React.Component {
   updatePost(e) {
     e.preventDefault();
     this.setState({ updateBtn: !this.state.updateBtn });
-    console.log("clicked", { updateBtn: !this.state.updateBtn });
   }
   sendUpdatedPost(id) {
     axios
@@ -268,17 +270,14 @@ class App extends React.Component {
         this.props.history.push("/blogs");
       });
   }
-  setCurrentPost(newPost){
-    console.log(newPost);
-    this.setState({Post:newPost})
-  // obj.post_id
+  setCurrentPost(newPost) {
+    this.setState({ Post: newPost });
   }
   deletePost(obj) {
-    console.log("objina =>", obj.post_id);
-
     axios
       .delete("api/blogs/" + obj.post_id)
       .then((data) => {
+        this.userBlogsState();
         this.fetchUserBlogs();
         this.fetchAllData();
       })
@@ -379,7 +378,7 @@ class App extends React.Component {
                       <Link
                         to="/blogs"
                         className="nav-link active"
-                        onClick={this.fetchUserBlogs}
+                        onClick={(this.fetchUserBlogs, this.userBlogsState)}
                       >
                         My Blogs
                       </Link>
@@ -416,6 +415,7 @@ class App extends React.Component {
                   handleChange={this.handleChange.bind(this)}
                   sendUpdatedPost={this.sendUpdatedPost.bind(this)}
                   deletePost={this.deletePost.bind(this)}
+                  userBlogState={this.state.userBlogState}
                 />
               </Route>
               <Route path="/story">
@@ -446,7 +446,6 @@ class App extends React.Component {
                     data={this.state.data}
                     detail={this.state.detail}
                     getUserData={this.getUserData.bind(this)}
-                    
                   />
                 ) : (
                   <BlogPost
@@ -457,9 +456,6 @@ class App extends React.Component {
                     setCurrentPost={this.setCurrentPost.bind(this)}
                   />
                 )}
-              </Route>
-              <Route path="/about">
-                <AboutUs />
               </Route>
             </Switch>
           </div>

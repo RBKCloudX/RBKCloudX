@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+import NotFound from "./NotFound.jsx";
 const UserBlogs = ({
   data,
   updatePost,
@@ -7,9 +8,9 @@ const UserBlogs = ({
   handleChange,
   sendUpdatedPost,
   deletePost,
-}) => {
-  console.log(data[0]);
-  return (
+  userBlogState,
+}) =>
+  userBlogState ? (
     <div className="userblog-container">
       <div className="ui massive vertical pointing menu">
         {data.map((blog, index) => (
@@ -73,7 +74,10 @@ const UserBlogs = ({
         ))}
       </div>
     </div>
+  ) : (
+    <div>
+      <NotFound />
+    </div>
   );
-};
 
 export default UserBlogs;

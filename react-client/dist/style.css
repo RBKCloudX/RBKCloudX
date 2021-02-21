@@ -102,12 +102,16 @@ input[type="password"] {
   max-height: 21px;
   padding: 0px;
 }
-.feed {
-  max-width: 700px;
+.feed .segment {
+  max-width: 500px !important;
   padding: 2em;
   margin: auto;
-  display: block;
-  min-width: 610px;
+  min-width: 610px !important;
+  margin-bottom: 5% !important;
+}
+.error-image {
+  max-width: 80% !important;
+  margin-bottom: 10% !important;
 }
 .column {
   margin-top: 2% !important;
@@ -277,6 +281,7 @@ input[type="password"] {
   background-color: white;
   border: 1px #713e5a;
   padding: 5px 20px 5px 20px;
+  min-height: 700px;
 }
 
 /* fade in for title */
@@ -761,6 +766,7 @@ form#login-form:after {
   margin-top: 5%;
   margin-left: 8%;
   margin-bottom: 5%;
+  min-height: 700px;
 }
 #title-userblogs {
   font-family: "Playfair Display", serif;

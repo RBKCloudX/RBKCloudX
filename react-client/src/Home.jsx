@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 
-const Home = ({ data, renderPost, detail, getUserData , setCurrentPost}) => (
+const Home = ({ data, renderPost, detail, getUserData }) => (
   <div>
     {data.map((blog, index) => (
       <div className="feed" key={index}  onClick={() => getUserData(blog.id)}>

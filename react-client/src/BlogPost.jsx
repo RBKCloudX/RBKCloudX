@@ -7,7 +7,7 @@ import Panel from './Panel.jsx'
 
 
 
-export default function BlogPost({ Posts, Post, user_post, currentPost , setCurrentPost}) {
+export default function BlogPost({ Posts, Post, user_post, setCurrentPost}) {
 console.log(Posts);
   return (
     <div  style={{width: '100%', display:"flex", flexDirection:"row"}}>

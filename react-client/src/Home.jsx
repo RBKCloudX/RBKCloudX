@@ -4,8 +4,8 @@ import moment from "moment";
 const Home = ({ data, renderPost, detail, getUserData }) => (
   <div>
     {data.map((blog, index) => (
-      <div className="feed" key={index}  onClick={() => getUserData(blog.id)}>
-        <div className="column" >
+      <div className="feed" key={index} onClick={() => getUserData(blog.id)}>
+        <div className="column">
           <div className="ui two column grid">
             <div className="ui raised segment">
               <a className="ui whitesmoke ribbon label">
@@ -21,7 +21,7 @@ const Home = ({ data, renderPost, detail, getUserData }) => (
               </h1>
               <div>
                 {blog.body
-                  .split(".")
+                  .split("\n")
                   .slice(0, 1)
                   .map((paragraph, index) => (
                     <p className="body" key={index}>

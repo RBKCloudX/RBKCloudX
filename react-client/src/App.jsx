@@ -91,11 +91,16 @@ class App extends React.Component {
   // setUsername function that will check using the token if the token valid for a specific user then he will stay logged in
   setCurrentState() {
     const token = localStorage.getItem("token");
-    axios.get("/api/verify/" + token).then((res) => {
+    const config = {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    };
+    axios.get("/api/verify/", config).then((res) => {
+      const token = res.config.headers.Authorization.replace("Bearer ", "");
       this.setState({ currentUser: res.data, isLoggedIn: true });
       localStorage.setItem("isLoggedIn", true);
       localStorage.setItem("token", token);
-      console.log("=>>>", res);
     });
   }
 
@@ -433,6 +438,6 @@ class App extends React.Component {
   }
 }
 
-//hhiuhgouiguoygouy
+
 
 export default withRouter(App);

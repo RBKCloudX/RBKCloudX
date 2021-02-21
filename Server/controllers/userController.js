@@ -21,7 +21,7 @@ module.exports = {
             {
               data: req.body.username,
             },
-            "secret",
+            "zitouna",
             { expiresIn: "24h" }
           );
           res.send({
@@ -61,7 +61,7 @@ module.exports = {
                     {
                       data: req.body.email,
                     },
-                    "secret",
+                    "zitouna",
                     { expiresIn: "24h" }
                   );
                   res.send({

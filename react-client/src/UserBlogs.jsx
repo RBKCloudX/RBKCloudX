@@ -1,6 +1,13 @@
 import React from "react";
 import moment from "moment";
-const UserBlogs = ({ data, updatePost }) => {
+const UserBlogs = ({
+  data,
+  updatePost,
+  state,
+  handleChange,
+  sendUpdatedPost,
+  deletePost,
+}) => {
   console.log(data[0]);
   return (
     <div className="userblog-container">
@@ -12,11 +19,55 @@ const UserBlogs = ({ data, updatePost }) => {
               <h6>{moment(blog.createdAt).fromNow()}</h6>
             </div>
             <div className="ui buttons">
-              <button className="ui positive button" onClick={updatePost}>
-                update
-              </button>
-              <div className="or"></div>
-              <button className="ui red button">delete</button>
+              {!state ? (
+                <div className="ui buttons">
+                  <button className="ui positive button" onClick={updatePost}>
+                    update
+                  </button>
+                  <div className="or"></div>
+                  <button
+                    className="ui red button"
+                    onClick={() => deletePost(blog)}
+                  >
+                    delete
+                  </button>
+                </div>
+              ) : (
+                <div>
+                  <button
+                    className="ui positive button"
+                    onClick={() => {
+                      sendUpdatedPost(blog.post_id);
+                    }}
+                  >
+                    submit
+                  </button>
+                  <div className="ui form">
+                    <div className="field">
+                      <label>Title</label>
+                      <textarea
+                        rows="2"
+                        name="title"
+                        onChange={(e) => handleChange(e)}
+                      ></textarea>
+                      <div className="field">
+                        <label>Blog</label>
+                        <textarea
+                          name="body"
+                          onChange={(e) => handleChange(e)}
+                        ></textarea>
+                      </div>
+                    </div>
+                    <div className="or"></div>
+                    <button
+                      className="ui red button"
+                      onClick={() => deletePost(blog)}
+                    >
+                      delete
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </a>
         ))}

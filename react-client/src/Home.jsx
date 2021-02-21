@@ -9,7 +9,7 @@ const Home = ({ data, renderPost, detail, getUserData }) => (
           <div className="ui two column grid">
             <div className="ui raised segment">
               <a className="ui whitesmoke ribbon label">
-                {moment(blog.createdAt).subtract(6, "days").calendar()}
+                {moment(blog.createdAt).fromNow()}
               </a>
               <h1
                 onClick={() => {
